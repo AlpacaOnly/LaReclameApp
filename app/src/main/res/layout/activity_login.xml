@@ -50,6 +50,7 @@
 
     <TextView
         android:id="@+id/do_not_have_an_account"
+        android:onClick="no_account_onClick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -72,7 +73,8 @@
         android:text="@string/sign_in"
         android:textSize="20sp"
         android:textColor="@color/white"
-        android:background="@drawable/button_bg" />
+        android:background="@drawable/button_bg"
+        android:onClick="onLoginClick"/>
 
 
 
