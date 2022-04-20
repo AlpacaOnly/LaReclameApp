@@ -1,15 +1,18 @@
 package com.example.lareclame.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.lareclame.R;
 
@@ -19,16 +22,21 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
     EditText username;
     EditText password;
-    Button sign_in;
+    TextView no_account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        username=findViewById(R.id.email_address);
-        password=findViewById(R.id.password);
-        sign_in=findViewById(R.id.sign_in_button);
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
+
+    }
+
+    public void no_account_onClick (View view) {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     public void onLoginClick(View view) {
@@ -53,10 +61,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        LoginRequest loginRequest =new LoginRequest(Username, Password, listener);
+        LoginRequest loginRequest =new LoginRequest(Username, Password, listener, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error);
+            }
+        });
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(loginRequest);
-
-
     }
+
 }

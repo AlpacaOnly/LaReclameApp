@@ -6,15 +6,18 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/drawable/button_bg.xml" value="0.197" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/drawable/gradient.xml" value="0.197" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2265" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/drawable/profile_photo_bg.xml" value="0.183" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/layout/activity_login.xml" value="0.2413793103448276" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/layout/activity_login2.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/layout/activity_profile.xml" value="0.1640625" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/layout/activity_register.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/layout/activity_sign_up.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/layout/profile_activity.xml" value="0.176" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/layout/sign_up_activity.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2265" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2265" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/xml/network_security_config.xml" value="0.11302083333333333" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.17325227963525835" />
       </map>
     </option>
