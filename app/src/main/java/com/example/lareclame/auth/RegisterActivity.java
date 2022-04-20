@@ -23,10 +23,10 @@ import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText email;
-    EditText username;
-    EditText password;
-    EditText password_re_enter;
+    EditText et_email;
+    EditText et_username;
+    EditText et_password;
+    EditText et_password_re_enter;
     Button sign_up;
     TextView sign_in;
 
@@ -36,20 +36,27 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        email = findViewById(R.id.sign_up_email_address);
-        username = findViewById(R.id.sign_up_username);
-        password = findViewById(R.id.sign_up_password);
-        password_re_enter = findViewById(R.id.password_re_enter);
+        et_email = findViewById(R.id.sign_up_email_address);
+        et_username = findViewById(R.id.sign_up_username);
+        et_password = findViewById(R.id.sign_up_password);
+        et_password_re_enter = findViewById(R.id.password_re_enter);
         sign_up = findViewById(R.id.sign_up_button);
-
-        sign_up.setOnClickListener(view -> checkIfDataEntered());
     }
 
     public void onRegisterClick(View view) {
-        final String Username = username.getText().toString();
-        final String Email = email.getText().toString();
-        final String Password = password.getText().toString();
-        final String Password_re_enter = password_re_enter.getText().toString();
+        final String username = et_username.getText().toString();
+        final String email = et_email.getText().toString();
+        final String password = et_password.getText().toString();
+        final String password_re_enter = et_password_re_enter.getText().toString();
+
+        if (!password.equals(password_re_enter)) {
+            et_password.setError("Passwords doesn't match");
+            return;
+        }
+        if (et_password.length() < 8) {
+            et_password.setError("Password should contain at least 8 characters");
+            return;
+        }
 
         Response.Listener <String> listener = response -> {
             try {
@@ -75,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         };
 
-        RegisterRequest registerRequest = new RegisterRequest(Username, Password, Email, listener, new Response.ErrorListener() {
+        RegisterRequest registerRequest = new RegisterRequest(username, password, email, listener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(error);
@@ -98,12 +105,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void checkIfDataEntered() {
-        if (isEmpty(username)) {
+        if (isEmpty(et_username)) {
             Toast toast=Toast.makeText(this, "Username is required!", Toast.LENGTH_SHORT);
             toast.show();
         }
-        if (!isEmail(email)) {
-            email.setError("Enter valid email");
+        if (!isEmail(et_email)) {
+            et_email.setError("Enter valid email");
         }
     }
 }
