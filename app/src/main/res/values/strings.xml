@@ -5,10 +5,13 @@
     <string name="password">Password</string>
     <string name="sign_in">Sign In</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
-    <string name="username">Username</string>
     <string name="re_enter_password">Re-enter password</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="app_logo">App logo</string>
     <string name="name">Ayazhan Aitzhanova</string>
+    <string name="user_image">user-image</string>
+    <string name="username">Username</string>
+    <string name="rating_example">Rating: 4.99</string>
+    <string name="Lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
 
 </resources>
