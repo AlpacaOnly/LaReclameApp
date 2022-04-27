@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,14 +28,34 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayAdapter<String> arrayAdapter;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         listview = findViewById(R.id.listview);
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, name);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, name);
         listview.setAdapter(arrayAdapter);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
+        bottomNavigationView.setSelectedItemId(R.id.ic_home);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.ic_home:
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    return true;
+                case R.id.ic_create_announcement:
+                    startActivity(new Intent(getApplicationContext(), CreateItemActivity.class));
+                    return true;
+                case R.id.ic_settings:
+                    return true;
+                case R.id.ic_profile:
+                    startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+            }
+            return false;
+        });
     }
 
     @Override
