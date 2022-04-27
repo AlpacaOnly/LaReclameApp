@@ -16,4 +16,10 @@
     <string name="search">Search</string>
     <string name="announcement">Create an announcement</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="category">Category*</string>
+    <string name="description">Description*</string>
+    <string name="example_lost_and_found">Example, lost-and-found</string>
+    <string name="example_id_card">Example, ID Card</string>
+    <string name="name_of_your_product">Name of your product*</string>
+    <string name="description_of_your_product">Description of your product</string>
 </resources>
