@@ -13,5 +13,8 @@
     <string name="username">Username</string>
     <string name="rating_example">Rating: 4.99</string>
     <string name="Lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="search">Search</string>
+    <string name="announcement">Create an announcement</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>

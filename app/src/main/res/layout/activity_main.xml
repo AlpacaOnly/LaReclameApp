@@ -8,14 +8,29 @@
     tools:context=".MainActivity">
 
     <ListView
+        android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id = "@+id/listview" />
+        android:layout_height="10dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-38dp"
+        tools:ignore="MissingConstraints" />
 
     <ListView
+        android:id="@+id/action_search"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/action_search" />
+        android:layout_height="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/ImageLogo"
+        android:layout_width="73dp"
+        android:layout_height="83dp"
+        android:contentDescription="@string/app_logo"
+        android:src="@drawable/logo"
+        tools:layout_editor_absoluteX="17dp"
+        tools:layout_editor_absoluteY="16dp"
+        tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.SearchView
         android:layout_width="256dp"
@@ -25,21 +40,9 @@
         tools:layout_editor_absoluteX="139dp"
         tools:layout_editor_absoluteY="33dp" />
 
-    <ImageView
-        android:id="@+id/ImageLogo"
-        android:layout_width="73dp"
-        android:layout_height="83dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:contentDescription="@string/app_logo"
-        android:src="@drawable/logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/appCompatButton"
         android:layout_width="180dp"
         android:layout_height="61dp"
         android:background="@drawable/button_bg"
@@ -48,8 +51,8 @@
         android:textColor="@color/white"
         android:textSize="20sp"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="141dp" />
+        tools:layout_editor_absoluteX="14dp"
+        tools:layout_editor_absoluteY="142dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="180dp"
@@ -64,6 +67,7 @@
         tools:layout_editor_absoluteY="141dp" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/appCompatButton2"
         android:layout_width="180dp"
         android:layout_height="61dp"
         android:background="@drawable/button_bg"
@@ -100,6 +104,7 @@
         tools:layout_editor_absoluteY="280dp" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/appCompatButton3"
         android:layout_width="180dp"
         android:layout_height="61dp"
         android:background="@drawable/button_bg"
@@ -111,13 +116,43 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="280dp" />
 
-    <ImageView
-        android:layout_width="187dp"
-        android:layout_height="253dp"
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="198dp"
+        android:layout_height="409dp"
+        android:background="@color/whhhw"
+        android:radius="20dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="365dp"
+        tools:ignore="MissingConstraints" />
 
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="384dp" />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:layout_width="205dp"
+        android:layout_height="413dp"
+        android:background="@color/whhhw"
+        android:radius="20dp"
+        tools:layout_editor_absoluteX="206dp"
+        tools:layout_editor_absoluteY="422dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:layout_width="183dp"
+        android:layout_height="244dp"
+        android:src="@drawable/img"
+        tools:layout_editor_absoluteX="11dp"
+        tools:layout_editor_absoluteY="374dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:layout_width="183dp"
+        android:layout_height="136dp"
+        android:text="Продам 3-х комнатную квартиру в центре города \n 19 500 000 тенге"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="11dp"
+        tools:layout_editor_absoluteY="629dp"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
