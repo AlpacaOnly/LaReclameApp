@@ -45,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.ic_home:
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    return true;
                 case R.id.ic_create_announcement:
                     startActivity(new Intent(getApplicationContext(), CreateItemActivity.class));
+                    return true;
                 case R.id.ic_settings:
                     return true;
                 case R.id.ic_profile:
