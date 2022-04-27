@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         String nm = sh.getString("username", "");
 
         if (!nm.equals("")) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
         }
 
