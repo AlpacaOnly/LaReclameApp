@@ -29,6 +29,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        String nm = sh.getString("username", "");
+
+        if (!nm.equals("")) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+        }
+
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
     }
