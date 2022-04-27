@@ -16,4 +16,14 @@
     <string name="search">Search</string>
     <string name="announcement">Create an announcement</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="accommodation">Accommodation</string>
+    <string name="buy_sale">Buy/sale</string>
+    <string name="lost_and_found">Lost-And-Found</string>
+    <string name="project">Project</string>
+    <string name="other">Other</string>
+    <string name="services">Services</string>
+    <string name="today_11_23">Today 11:23</string>
+    <string name="_3">Продам 3-х комнатную квартиру в центре города</string>
+    <string name="_19_500_000">19 500 000 тенге</string>
+    <string name="todo">TODO</string>
 </resources>
