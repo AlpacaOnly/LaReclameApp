@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".auth.RegisterActivity" />
+        <activity android:name=".auth.ProfileActivity"/>
     </application>
 
 </manifest>
