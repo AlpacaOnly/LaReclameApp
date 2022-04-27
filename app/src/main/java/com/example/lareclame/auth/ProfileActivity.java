@@ -28,6 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
         tv_username.setText(nm);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
+        bottomNavigationView.setSelectedItemId(R.id.ic_profile);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.ic_home:
