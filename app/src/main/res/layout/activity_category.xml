@@ -5,42 +5,101 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <TextView
+        android:id="@+id/filters"
+        android:layout_width="267dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="44dp"
+        android:text="FILTERS"
+        android:textColor="@color/black"
+        android:textSize="60dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
     <androidx.appcompat.widget.SearchView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Search"
-        android:textSize="20sp"
         android:inputType="text"
-        tools:ignore="MissingConstraints" />
+        android:textSize="20sp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="33dp"
+        tools:layout_editor_absoluteY="-21dp" />
+
 
     <androidx.appcompat.widget.AppCompatSeekBar
         android:layout_width="409dp"
         android:layout_height="62dp"
         tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="57dp" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:layout_width="219dp"
+        android:layout_height="445dp"
+        android:background="@color/whhhw"
+        android:radius="20dp"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="50dp" />
+        tools:layout_editor_absoluteY="142dp" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView2"
+        android:layout_width="219dp"
+        android:layout_height="445dp"
+        android:background="@color/whhhw"
+        android:radius="20dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="189dp"
+        tools:layout_editor_absoluteY="298dp" />
 
     <ImageView
+        android:id="@+id/phototo"
         android:layout_width="177dp"
-        android:layout_height="240dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="218dp"
-        tools:layout_editor_absoluteY="138dp" />
+        android:layout_height="222dp"
+        android:src="@drawable/img"
+        tools:layout_editor_absoluteX="226dp"
+        tools:layout_editor_absoluteY="351dp" />
+
+    <TextView
+        android:id="@+id/nameofproduc"
+        android:layout_width="181dp"
+        android:layout_height="173dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="400dp"
+        android:text="Продам 3-х комнатную квартиру в центре города \n 19 500 000 тенге"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:layout_width="168dp"
-        android:layout_height="240dp"
+        android:layout_width="181dp"
+        android:layout_height="242dp"
+        android:src="@drawable/bath"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="138dp" />
+        tools:layout_editor_absoluteX="11dp"
+        tools:layout_editor_absoluteY="158dp" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="168dp"
-        android:layout_height="240dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="404dp" />
+    <TextView
+        android:id="@+id/nameofprod"
+        android:layout_width="151dp"
+        android:layout_height="116dp"
+        android:layout_marginStart="244dp"
+        android:layout_marginTop="584dp"
+        android:text="Найдена собака девочка \n БЕСПЛАТНО"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
