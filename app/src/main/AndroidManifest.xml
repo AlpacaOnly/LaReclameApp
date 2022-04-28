@@ -29,6 +29,7 @@
         <activity android:name=".auth.ProfileActivity"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".auth.CreateItemActivity"/>
+        <activity android:name=".auth.ItemActivity"/>
     </application>
 
 </manifest>
