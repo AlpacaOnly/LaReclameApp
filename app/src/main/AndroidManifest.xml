@@ -26,10 +26,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".auth.RegisterActivity" />
-        <activity android:name=".auth.ProfileActivity"/>
+        <activity android:name=".ProfileActivity"/>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".auth.CreateItemActivity"/>
-        <activity android:name=".auth.ItemActivity"/>
+        <activity android:name=".CreateItemActivity"/>
+        <activity android:name=".ItemActivity"/>
     </application>
 
 </manifest>

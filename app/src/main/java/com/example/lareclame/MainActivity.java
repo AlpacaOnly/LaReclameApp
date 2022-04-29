@@ -1,6 +1,5 @@
 package com.example.lareclame;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
@@ -8,18 +7,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View.OnClickListener;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.lareclame.auth.CreateItemActivity;
-import com.example.lareclame.auth.ItemActivity;
-import com.example.lareclame.auth.ProfileActivity;
-import com.example.lareclame.auth.RegisterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 

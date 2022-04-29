@@ -1,4 +1,4 @@
-package com.example.lareclame.auth;
+package com.example.lareclame;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -7,8 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.lareclame.MainActivity;
-import com.example.lareclame.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class CreateItemActivity extends AppCompatActivity {
