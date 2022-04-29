@@ -17,7 +17,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.lareclame.auth.CreateItemActivity;
+import com.example.lareclame.auth.ItemActivity;
 import com.example.lareclame.auth.ProfileActivity;
+import com.example.lareclame.auth.RegisterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -82,5 +84,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public void More_details(View view) {
+        Intent intent = new Intent(this, ItemActivity.class);
+        startActivity(intent);
     }
 }

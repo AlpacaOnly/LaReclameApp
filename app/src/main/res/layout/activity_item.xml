@@ -12,7 +12,7 @@
         android:layout_height="415dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/example_item_photo" />
+        app:srcCompat="@drawable/img" />
 
     <TextView
         android:id="@+id/date"

@@ -148,8 +148,6 @@
                 app:layout_constraintStart_toStartOf="@id/description2"
                 app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </ScrollView>
 
 
