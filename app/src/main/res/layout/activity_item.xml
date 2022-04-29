@@ -28,12 +28,10 @@
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="20dp"
-        android:text="Posted 27 April 2022"
+        android:text=" Опубликовано 27 April 2022"
         android:textSize="14dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/item_name"
         app:layout_constraintTop_toBottomOf="@id/item_photo" />
 
 
@@ -57,7 +55,7 @@
         android:layout_marginTop="8dp"
         android:text="Бесплатно"
         android:textColor="@color/black"
-        android:textSize="22dp"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/item_name" />
@@ -67,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Description:"
+        android:text="Описание:"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
