@@ -44,24 +44,25 @@ public class MainActivity extends AppCompatActivity {
 //        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, name);
 //        listview.setAdapter(arrayAdapter);
 
-//        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
-//        bottomNavigationView.setSelectedItemId(R.id.ic_home);
-//
-//        bottomNavigationView.setOnItemSelectedListener(item -> {
-//            switch (item.getItemId()) {
-//                case R.id.ic_home:
-//                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//                    return true;
-//                case R.id.ic_create_announcement:
-//                    startActivity(new Intent(getApplicationContext(), CreateItemActivity.class));
-//                    return true;
-//                case R.id.ic_settings:
-//                    return true;
-//                case R.id.ic_profile:
-//                    startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-//            }
-//            return false;
-//        });
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
+        bottomNavigationView.setSelectedItemId(R.id.ic_home);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.ic_home:
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    return true;
+                case R.id.ic_create_announcement:
+                    startActivity(new Intent(getApplicationContext(), CreateItemActivity.class));
+                    return true;
+                case R.id.ic_settings:
+                    startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                    return true;
+                case R.id.ic_profile:
+                    startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+            }
+            return false;
+        });
     }
 
     private void setAdapter() {
