@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         itemsList.add(new Item("Курсы от Диаса"));
         itemsList.add(new Item("Продам Софию"));
         itemsList.add(new Item("Сырым Лох"));
-
     }
 
     @Override

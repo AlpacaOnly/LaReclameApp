@@ -1,5 +1,6 @@
 package com.example.lareclame.auth;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
         String nm = sh.getString("username", "");
 
         if (!nm.equals("")) {
@@ -44,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
 
         String nm = sh.getString("username", "");
         String pass = sh.getString("password", "");
@@ -56,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("Login", MODE_PRIVATE);
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
         myEdit.putString("username", username.getText().toString());
@@ -81,6 +82,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (status.equals("ok")) {
                     Intent intent = new Intent(this, ProfileActivity.class);
                     startActivity(intent);
+                    SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("isUserLogin", true);
+                    editor.commit();
+
                 } else {
                     String error = jsonObject.getString("error");
                     AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
