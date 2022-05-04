@@ -1,5 +1,7 @@
 package com.example.lareclame.items;
 
+import androidx.annotation.Nullable;
+
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
@@ -16,6 +18,11 @@ public class ItemRequest extends StringRequest {
         params.put("username", username);
         params.put("title", title);
         params.put("body", body);
+    }
 
+    @Nullable
+    @Override
+    public Map<String, String> getParams() {
+        return params;
     }
 }
