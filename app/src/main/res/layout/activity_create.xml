@@ -12,13 +12,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="37dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/crest"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/create_announcement"

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.lareclame.recyclerView.RecyclerViewMargin;
 import com.example.lareclame.recyclerView.recyclerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
     private void setAdapter() {
         recyclerAdapter adapter =new recyclerAdapter(itemsList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerViewMargin decoration = new RecyclerViewMargin(50, 1);
+        recyclerView.addItemDecoration(decoration);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
