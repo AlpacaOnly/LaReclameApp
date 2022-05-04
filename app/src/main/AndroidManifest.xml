@@ -30,8 +30,8 @@
         <activity android:name=".auth.RegisterActivity" />
         <activity android:name=".ProfileActivity"/>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".CreateItemActivity"/>
-        <activity android:name=".ItemActivity"/>
+        <activity android:name=".items.CreateItemActivity"/>
+        <activity android:name=".items.ItemActivity"/>
         <activity android:name=".SettingsActivity"/>
     </application>
 

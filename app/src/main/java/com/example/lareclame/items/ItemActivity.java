@@ -1,4 +1,4 @@
-package com.example.lareclame;
+package com.example.lareclame.items;
 
 import  android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.lareclame.MainActivity;
+import com.example.lareclame.ProfileActivity;
+import com.example.lareclame.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ItemActivity extends AppCompatActivity {

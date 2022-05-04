@@ -15,6 +15,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.lareclame.items.CreateItemActivity;
+import com.example.lareclame.items.Item;
+import com.example.lareclame.items.ItemActivity;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
 import com.example.lareclame.recyclerView.recyclerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

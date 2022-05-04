@@ -1,4 +1,4 @@
-package com.example.lareclame;
+package com.example.lareclame.items;
 
 public class Item {
     private String name;

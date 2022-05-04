@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lareclame.Item;
+import com.example.lareclame.items.Item;
 import com.example.lareclame.R;
 
 import java.util.ArrayList;
