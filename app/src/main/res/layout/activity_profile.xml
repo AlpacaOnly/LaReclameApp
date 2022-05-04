@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_photo"
             android:onClick="change_photo"
             android:layout_width="wrap_content"
@@ -34,8 +34,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/profile_modified"
-            android:adjustViewBounds="true"
+            android:src="@drawable/profile_photo"
             android:contentDescription="@string/user_image"
             />
 
