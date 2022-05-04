@@ -19,7 +19,7 @@
         tools:targetApi="n" >
 
         <activity
-            android:name=".ProfileActivity"
+            android:name=".auth.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".auth.RegisterActivity" />
-<!--        <activity android:name=".ProfileActivity"/>-->
+        <activity android:name=".ProfileActivity"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".CreateItemActivity"/>
         <activity android:name=".ItemActivity"/>

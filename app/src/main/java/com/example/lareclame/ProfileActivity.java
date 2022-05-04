@@ -33,7 +33,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
         String nm = sh.getString("username", "");
 
         final TextView tv_username = (TextView) findViewById(R.id.username);
