@@ -30,9 +30,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
-        String nm = sh.getString("username", "");
+        boolean isUserLogin = sh.getBoolean("isUserLogin", false);
 
-        if (!nm.equals("")) {
+        if (isUserLogin) {
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
         }
