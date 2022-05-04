@@ -71,7 +71,7 @@
                 app:layout_constraintTop_toBottomOf="@id/imageButton"/>
 
             <EditText
-                android:id="@+id/et_product_name"
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -91,7 +91,7 @@
                 android:textStyle="bold"
                 android:layout_marginTop="24dp"
                 app:layout_constraintStart_toStartOf="@id/product_name"
-                app:layout_constraintTop_toBottomOf="@id/et_product_name"/>
+                app:layout_constraintTop_toBottomOf="@id/title"/>
 
             <EditText
                 android:id="@+id/et_category"
@@ -118,7 +118,7 @@
                 android:layout_marginTop="24dp"/>
 
             <EditText
-                android:id="@+id/et_description"
+                android:id="@+id/body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -129,6 +129,8 @@
                 app:layout_constraintStart_toStartOf="@id/description2"/>
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/create_button"
+                android:onClick="create_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -139,7 +141,7 @@
                 android:textColor="#252c2f"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@id/imageButton"
-                app:layout_constraintTop_toBottomOf="@id/et_description" />
+                app:layout_constraintTop_toBottomOf="@id/body" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
