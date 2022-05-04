@@ -11,7 +11,7 @@ import java.util.Map;
 
 
 public class LoginRequest extends StringRequest{
-    private static final String LoginRequestUrl="http://2.57.186.206:5001/auth/login";
+    private static final String LoginRequestUrl="http://134.209.109.73:5001/auth/login";
     private final Map <String, String> params;
 
     public LoginRequest(String username, String password, Response.Listener<String> listener, Response.ErrorListener err) {
