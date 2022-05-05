@@ -30,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class CreateItemActivity extends AppCompatActivity {
-    EditText et_username;
     EditText et_title;
     EditText et_body;
 
@@ -40,7 +39,6 @@ public class CreateItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
 
-        et_username = findViewById(R.id.username);
         et_title = findViewById(R.id.title);
         et_body = findViewById(R.id.body);
 
@@ -66,7 +64,6 @@ public class CreateItemActivity extends AppCompatActivity {
     }
 
     public void create_item() {
-        final String username = et_username.getText().toString();
         final String title = et_title.getText().toString();
         final String body = et_body.getText().toString();
 
@@ -90,7 +87,7 @@ public class CreateItemActivity extends AppCompatActivity {
             }
         };
 
-        ItemRequest itemRequest = new ItemRequest(username, title, body, listener, new Response.ErrorListener() {
+        ItemRequest itemRequest = new ItemRequest(title, body, listener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(error);
