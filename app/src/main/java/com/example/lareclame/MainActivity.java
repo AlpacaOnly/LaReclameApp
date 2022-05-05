@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private void setAdapter() {
         recyclerAdapter adapter =new recyclerAdapter(itemsList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        RecyclerViewMargin decoration = new RecyclerViewMargin(50, 1);
+        RecyclerViewMargin decoration = new RecyclerViewMargin(10, 1);
         recyclerView.addItemDecoration(decoration);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -81,9 +81,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setItemInfo() {
+        itemsList.add(new Item("Продам квартиру"));
         itemsList.add(new Item("Курсы от Диаса"));
-        itemsList.add(new Item("Продам Софию"));
-        itemsList.add(new Item("Сырым Лох"));
     }
 
     @Override

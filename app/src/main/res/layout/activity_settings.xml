@@ -13,7 +13,9 @@
         android:text="Log out"
         android:textSize="24dp"
         android:textStyle="bold"
-        tools:ignore="MissingConstraints" />
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:layout_width="match_parent"
