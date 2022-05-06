@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -63,7 +64,7 @@ public class CreateItemActivity extends AppCompatActivity {
         });
     }
 
-    public void create_item() {
+    public void create_item(View view) {
         final String title = et_title.getText().toString();
         final String body = et_body.getText().toString();
 
@@ -71,12 +72,10 @@ public class CreateItemActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 String status =jsonObject.getString("status");
-
+                System.out.println(status);
                 if (status.equals("ok")) {
-                    Toast toast=Toast.makeText(this, "Successfully added!", Toast.LENGTH_SHORT);
-                    toast.show();
-                    Intent intent = new Intent(this, CreateItemActivity.class);
-                    startActivity(intent);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CreateItemActivity.this);
+                    builder.setMessage("Succesfully added").show();
                 } else {
                     String error = jsonObject.getString("error");
                     AlertDialog.Builder builder = new AlertDialog.Builder(CreateItemActivity.this);
@@ -87,7 +86,10 @@ public class CreateItemActivity extends AppCompatActivity {
             }
         };
 
-        ItemRequest itemRequest = new ItemRequest(title, body, listener, new Response.ErrorListener() {
+        SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
+        String username = sh.getString("username", "");
+
+        ItemRequest itemRequest = new ItemRequest(username, title, body, listener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(error);
@@ -97,5 +99,4 @@ public class CreateItemActivity extends AppCompatActivity {
         RequestQueue itemQueue = Volley.newRequestQueue(this);
         itemQueue.add(itemRequest);
     }
-
 }

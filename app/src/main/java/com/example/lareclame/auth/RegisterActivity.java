@@ -65,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (status.equals("ok")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setMessage("Successfully registered").setNegativeButton("Retry", null).create().show();
+                    builder.setMessage("Successfully registered").show();
                 } else {
                     String error = jsonObject.getString("error");
                     if (error.equals("User with such username already exists.")) {
