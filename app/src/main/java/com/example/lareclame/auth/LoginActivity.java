@@ -98,12 +98,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        LoginRequest loginRequest =new LoginRequest(Username, Password, listener, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println(error);
-            }
-        });
+        LoginRequest loginRequest =new LoginRequest(Username, Password, listener, System.out::println);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(loginRequest);
