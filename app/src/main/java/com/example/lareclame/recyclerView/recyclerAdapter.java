@@ -21,11 +21,13 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView tv_name;
+        private final TextView tv_name;
+        private final TextView tv_date;
 
         public MyViewHolder(final View View) {
             super(View);
-            tv_name=View.findViewById(R.id.item_name);
+            tv_name = View.findViewById(R.id.item_name);
+            tv_date = View.findViewById(R.id.date);
         }
     }
 
@@ -38,8 +40,9 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull recyclerAdapter.MyViewHolder holder, int position) {
-        String name= itemsList.get(position).getName();
-        holder.tv_name.setText(name);
+        Item item = itemsList.get(position);
+        holder.tv_name.setText(item.getTitle());
+        holder.tv_date.setText(item.getDate());
     }
 
     @Override

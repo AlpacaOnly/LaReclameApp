@@ -30,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 
@@ -91,13 +92,14 @@ public class MainActivity extends AppCompatActivity {
                 if (status.equals("ok")) {
                     JSONArray items = jsonObject.getJSONArray("items");
                     for (int i = 0; i < items.length(); i++) {
-                        JSONObject item = items.getJSONObject(i);
-                        itemsList.add(new Item(item.getString("title")));
+                        JSONObject itemJSON = items.getJSONObject(i);
+                        Item item = new Item(itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"));
+                        itemsList.add(item);
                         adapter = new recyclerAdapter(itemsList);
                         recyclerView.setAdapter(adapter);
                     }
                 }
-            } catch (JSONException e) {
+            } catch (JSONException | ParseException e) {
                 e.printStackTrace();
             }
         };
