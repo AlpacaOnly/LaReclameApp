@@ -15,22 +15,28 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.lareclame.items.CreateItemActivity;
 import com.example.lareclame.items.Item;
 import com.example.lareclame.items.ItemActivity;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
 import com.example.lareclame.recyclerView.recyclerAdapter;
+import com.example.lareclame.requests.GetItemsRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList<Item> itemsList;
+    private ArrayList<Item> itemsList = new ArrayList<>();
     private RecyclerView recyclerView;
-
-    ListView listview;
-    String[] name = {"Syryk", "Ayazzzzzzzzz", "DisaLox", "Sabinoid", "Ruslanidze"};
+    private recyclerAdapter adapter;
 
     ArrayAdapter<String> arrayAdapter;
 
@@ -39,15 +45,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView=findViewById(R.id.recyclerView);
-        itemsList= new ArrayList<>();
+        recyclerView = findViewById(R.id.recyclerView);
+        itemsList = new ArrayList<>();
 
         setItemInfo();
         setAdapter();
-
-//        listview = findViewById(R.id.listview);
-//        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, name);
-//        listview.setAdapter(arrayAdapter);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.ic_home);
@@ -81,8 +83,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setItemInfo() {
-        itemsList.add(new Item("Продам квартиру"));
-        itemsList.add(new Item("Курсы от Диаса"));
+        Response.Listener <String> listener = response -> {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                String status = jsonObject.getString("status");
+
+                if (status.equals("ok")) {
+                    JSONArray items = jsonObject.getJSONArray("items");
+                    for (int i = 0; i < items.length(); i++) {
+                        JSONObject item = items.getJSONObject(i);
+                        itemsList.add(new Item(item.getString("title")));
+                        adapter = new recyclerAdapter(itemsList);
+                        recyclerView.setAdapter(adapter);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        };
+
+        GetItemsRequest getItemsRequest = new GetItemsRequest(listener, System.out::println);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(getItemsRequest);
     }
 
     @Override
