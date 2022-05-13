@@ -91,7 +91,9 @@ public class ProfileActivity extends AppCompatActivity {
             ImageUrl = data.getData();
             try{
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), ImageUrl);
-                SaveImage(bitmap);
+                String encodedImage = encodeImage(bitmap);
+                SaveImage(encodedImage);
+                SaveToDb(encodedImage);
                 ProfileImage.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -99,27 +101,25 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void SaveImage(Bitmap realImage) {
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        realImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] b = baos.toByteArray();
-
-        String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+    private void SaveImage(String encodedImage) {
         SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
         SharedPreferences.Editor edit = sh.edit();
         edit.putString("image_data", encodedImage);
         edit.commit();
     }
 
-    private void SaveToDb(Bitmap realImage) {
+    private void SaveToDb(String encodedImage) {
 
+
+
+    }
+
+    private String encodeImage(Bitmap realImage) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         realImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();
 
-        String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-
+        return Base64.encodeToString(b, Base64.DEFAULT);
     }
 
 }
