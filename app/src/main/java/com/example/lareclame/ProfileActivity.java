@@ -56,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                     return true;
                 case R.id.ic_profile:
-                    startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                    return true;
             }
             return false;
         });

@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.ic_home:
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     return true;
                 case R.id.ic_create_announcement:
                     startActivity(new Intent(getApplicationContext(), CreateItemActivity.class));

@@ -4,7 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -34,6 +37,11 @@ public class CreateItemActivity extends AppCompatActivity {
     EditText et_title;
     EditText et_body;
 
+    ImageView objectImageView;
+    private static final int PICK_IMAGE_REQUEST=100;
+    private Uri imageFilePath;
+    private Bitmap imageToStore;
+
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +60,6 @@ public class CreateItemActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     return true;
                 case R.id.ic_create_announcement:
-                    startActivity(new Intent(getApplicationContext(), CreateItemActivity.class));
                     return true;
                 case R.id.ic_settings:
                     startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
@@ -98,5 +105,35 @@ public class CreateItemActivity extends AppCompatActivity {
 
         RequestQueue itemQueue = Volley.newRequestQueue(this);
         itemQueue.add(itemRequest);
+    }
+
+    public void choose_image(View view) {
+        try {
+            Intent objectIntent = new Intent();
+            objectIntent.setType("image/*");
+
+            objectIntent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(objectIntent, PICK_IMAGE_REQUEST);
+        }
+        catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode==PICK_IMAGE_REQUEST && resultCode==RESULT_OK && data!=null && data.getData()!=null){
+                imageFilePath = data.getData();
+                imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(), imageFilePath);
+
+                System.out.println(imageFilePath);
+                objectImageView.setImageBitmap(imageToStore);
+            }
+        }
+        catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }
