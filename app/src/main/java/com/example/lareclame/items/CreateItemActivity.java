@@ -82,7 +82,7 @@ public class CreateItemActivity extends AppCompatActivity {
                 System.out.println(status);
                 if (status.equals("ok")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(CreateItemActivity.this);
-                    builder.setMessage("Succesfully added").show();
+                    builder.setMessage("Successfully added").setPositiveButton("ok", null).show();
                 } else {
                     String error = jsonObject.getString("error");
                     AlertDialog.Builder builder = new AlertDialog.Builder(CreateItemActivity.this);
