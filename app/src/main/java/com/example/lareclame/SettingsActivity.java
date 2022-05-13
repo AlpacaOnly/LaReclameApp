@@ -32,7 +32,6 @@ public class SettingsActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), CreateItemActivity.class));
                     return true;
                 case R.id.ic_settings:
-                    startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                     return true;
                 case R.id.ic_profile:
                     startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
