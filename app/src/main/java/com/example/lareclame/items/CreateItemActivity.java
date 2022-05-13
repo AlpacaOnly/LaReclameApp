@@ -77,7 +77,7 @@ public class CreateItemActivity extends AppCompatActivity {
 
         Response.Listener <String> listener = response -> {
             try {
-                JSONObject jsonObject = new JSONObject(response);
+                JSONObject jsonObject   = new JSONObject(response);
                 String status =jsonObject.getString("status");
                 System.out.println(status);
                 if (status.equals("ok")) {

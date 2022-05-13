@@ -4,22 +4,24 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lareclame.items.CreateItemActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -28,6 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     Uri ImageUrl;
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +44,14 @@ public class ProfileActivity extends AppCompatActivity {
         tv_username.setText(nm);
 
         ProfileImage = (ImageView) findViewById(R.id.user_photo);
+
+        String previouslyEncodedImage = sh.getString("image_data", "");
+
+        if( !previouslyEncodedImage.equalsIgnoreCase("") ){
+            byte[] b = Base64.decode(previouslyEncodedImage, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+            ProfileImage.setImageBitmap(bitmap);
+        }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.ic_profile);
@@ -88,22 +99,27 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private static void SaveImage(Bitmap finalBitmap) {
+    private void SaveImage(Bitmap realImage) {
 
-        String root = Environment.getExternalStorageDirectory().getAbsolutePath();
-        File myDir = new File(root + "/saved_images");
-        myDir.mkdirs();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        realImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
 
-        File file = new File (myDir, System.currentTimeMillis()+".jpg");
-        if (file.exists ()) file.delete ();
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-            out.flush();
-            out.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+        SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
+        SharedPreferences.Editor edit = sh.edit();
+        edit.putString("image_data", encodedImage);
+        edit.commit();
     }
+
+    private void SaveToDb(Bitmap realImage) {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        realImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+
+        String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+    }
+
 }
