@@ -18,8 +18,15 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.lareclame.items.CreateItemActivity;
+import com.example.lareclame.requests.UploadImageRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -109,9 +116,22 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void SaveToDb(String encodedImage) {
+        SharedPreferences sharedPreferences = getSharedPreferences("Login", MODE_PRIVATE);
+        Response.Listener<String> listener = response -> {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                String status = jsonObject.getString("status");
+                if (status.equals("error")) {
+                    System.out.println(jsonObject.getString("error"));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        };
 
-
-
+        UploadImageRequest uploadImageRequest = new UploadImageRequest(sharedPreferences.getString("image_data", ""), listener, System.out::println);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(uploadImageRequest);
     }
 
     private String encodeImage(Bitmap realImage) {
