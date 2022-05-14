@@ -1,7 +1,6 @@
 package com.example.lareclame.items;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -26,8 +24,7 @@ import com.example.lareclame.MainActivity;
 import com.example.lareclame.ProfileActivity;
 import com.example.lareclame.R;
 import com.example.lareclame.SettingsActivity;
-import com.example.lareclame.auth.LoginActivity;
-import com.example.lareclame.auth.RegisterActivity;
+import com.example.lareclame.requests.ItemRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
@@ -102,12 +99,7 @@ public class CreateItemActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ItemRequest itemRequest = new ItemRequest(user_id, title, body, listener, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println(error);
-            }
-        });
+        ItemRequest itemRequest = new ItemRequest(user_id, title, body, listener, System.out::println);
 
         RequestQueue itemQueue = Volley.newRequestQueue(this);
         itemQueue.add(itemRequest);
