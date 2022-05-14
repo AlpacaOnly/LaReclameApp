@@ -54,11 +54,16 @@ public class CreateItemActivity extends AppCompatActivity implements AdapterView
 
         et_title = findViewById(R.id.title);
         et_body = findViewById(R.id.body);
-        spinner = findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
+        spinner = (Spinner) findViewById(R.id.spinner);
+
+
+        String[] arraySpinner = new String[] {
+                "1", "2", "3", "4", "5", "6"
+        };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.ic_create_announcement);
