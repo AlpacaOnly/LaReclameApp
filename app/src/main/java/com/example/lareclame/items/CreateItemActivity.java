@@ -30,8 +30,11 @@ import com.example.lareclame.SettingsActivity;
 import com.example.lareclame.requests.ItemRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class CreateItemActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText et_title;
@@ -53,10 +56,21 @@ public class CreateItemActivity extends AppCompatActivity implements AdapterView
         et_body = findViewById(R.id.body);
         spinner = (Spinner) findViewById(R.id.spinner);
 
+        ArrayList<String> arraySpinner = new ArrayList<>();
 
-        String[] arraySpinner = new String[] {
-                "1", "2", "3", "4", "5", "6"
-        };
+        SharedPreferences preferences = getSharedPreferences("Categories", MODE_PRIVATE);
+        try {
+            JSONArray categories = new JSONArray(preferences.getString("categories", ""));
+            for (int i = 0; i < categories.length(); i++) {
+                JSONObject category = categories.getJSONObject(i);
+                arraySpinner.add(category.getString("category_name"));
+                arraySpinner.add(category.getString("id"));
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

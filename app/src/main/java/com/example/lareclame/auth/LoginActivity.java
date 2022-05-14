@@ -117,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.apply();
                 } else {
                     String error = jsonObject.getString("error");
+                    System.out.println(error);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
