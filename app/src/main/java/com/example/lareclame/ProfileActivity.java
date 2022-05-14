@@ -45,7 +45,13 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
-        String nm = sh.getString("username", "");
+        String nm = "";
+        try {
+            JSONObject user = new JSONObject(sh.getString("user", ""));
+            nm = user.getString("username");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         final TextView tv_username = (TextView) findViewById(R.id.username);
         tv_username.setText(nm);
