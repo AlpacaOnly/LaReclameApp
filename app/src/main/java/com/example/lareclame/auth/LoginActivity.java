@@ -18,6 +18,7 @@ import com.example.lareclame.ProfileActivity;
 import com.example.lareclame.R;
 import com.example.lareclame.requests.LoginRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -80,6 +81,8 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putBoolean("isUserLogin", true);
                     editor.apply();
 
+                    setCategories();
+
                     Intent intent = new Intent(this, ProfileActivity.class);
                     startActivity(intent);
 
@@ -97,6 +100,28 @@ public class LoginActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(loginRequest);
+    }
+
+    public void setCategories() {
+        Response.Listener<String> listener = response -> {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                String status =jsonObject.getString("status");
+
+                if (status.equals("ok")) {
+                    JSONArray categories = jsonObject.getJSONArray("categories");
+
+                    SharedPreferences preferences = getSharedPreferences("Categories", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("categories", categories.toString());
+                    editor.apply();
+                } else {
+                    String error = jsonObject.getString("error");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        };
     }
 
 }
