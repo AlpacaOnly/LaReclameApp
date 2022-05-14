@@ -47,12 +47,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
-
-        String nm = sh.getString("username", "");
-        String pass = sh.getString("password", "");
-
-        username.setText(nm);
-        password.setText(pass);
+        try {
+            JSONObject user = new JSONObject(sh.getString("user", ""));
+            username.setText(user.getString("username"));
+            password.setText(user.getString("password"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void no_account_onClick (View view) {
