@@ -33,4 +33,13 @@
     <string name="_3">Продам 3-х комнатную квартиру в центре города</string>
     <string name="_19_500_000">19 500 000 тенге</string>
     <string name="todo">TODO</string>
+
+    <string-array name="categories">
+        <item>Accommodation</item>
+        <item>Lost-And-Found</item>
+        <item>Buy/Sale</item>
+        <item>Project</item>
+        <item>Services</item>
+        <item>Others</item>
+    </string-array>
 </resources>
