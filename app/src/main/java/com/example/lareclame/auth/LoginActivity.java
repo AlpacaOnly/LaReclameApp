@@ -55,17 +55,6 @@ public class LoginActivity extends AppCompatActivity {
         password.setText(pass);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        SharedPreferences sharedPreferences = getSharedPreferences("Login", MODE_PRIVATE);
-        SharedPreferences.Editor myEdit = sharedPreferences.edit();
-
-        myEdit.putString("username", username.getText().toString());
-        myEdit.putString("password", password.getText().toString());
-        myEdit.apply();
-    }
-
     public void no_account_onClick (View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
@@ -81,12 +70,17 @@ public class LoginActivity extends AppCompatActivity {
                 String status =jsonObject.getString("status");
 
                 if (status.equals("ok")) {
-                    Intent intent = new Intent(this, ProfileActivity.class);
-                    startActivity(intent);
+                    JSONObject user = jsonObject.getJSONObject("user");
+
                     SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
+
+                    editor.putString("user", user.toString());
                     editor.putBoolean("isUserLogin", true);
-                    editor.commit();
+                    editor.apply();
+
+                    Intent intent = new Intent(this, ProfileActivity.class);
+                    startActivity(intent);
 
                 } else {
                     String error = jsonObject.getString("error");
