@@ -94,7 +94,13 @@ public class CreateItemActivity extends AppCompatActivity {
         };
 
         SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
-        String username = sh.getString("username", "");
+        String username = "";
+        try {
+            JSONObject user = new JSONObject(sh.getString("user", ""));
+            username = user.getString("username");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         ItemRequest itemRequest = new ItemRequest(username, title, body, listener, new Response.ErrorListener() {
             @Override
