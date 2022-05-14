@@ -1,7 +1,6 @@
 package com.example.lareclame.items;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -29,8 +27,7 @@ import com.example.lareclame.MainActivity;
 import com.example.lareclame.ProfileActivity;
 import com.example.lareclame.R;
 import com.example.lareclame.SettingsActivity;
-import com.example.lareclame.auth.LoginActivity;
-import com.example.lareclame.auth.RegisterActivity;
+import com.example.lareclame.requests.ItemRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
@@ -108,14 +105,15 @@ public class CreateItemActivity extends AppCompatActivity implements AdapterView
         };
 
         SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
-        String username = sh.getString("username", "");
+        int user_id = -1;
+        try {
+            JSONObject user = new JSONObject(sh.getString("user", ""));
+            user_id = user.getInt("id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        ItemRequest itemRequest = new ItemRequest(username, title, body, listener, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println(error);
-            }
-        });
+        ItemRequest itemRequest = new ItemRequest(user_id, title, body, listener, System.out::println);
 
         RequestQueue itemQueue = Volley.newRequestQueue(this);
         itemQueue.add(itemRequest);

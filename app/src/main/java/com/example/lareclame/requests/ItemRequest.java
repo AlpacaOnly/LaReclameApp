@@ -1,4 +1,4 @@
-package com.example.lareclame.items;
+package com.example.lareclame.requests;
 
 import androidx.annotation.Nullable;
 
@@ -9,13 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ItemRequest extends StringRequest {
-    private static final String LoginRequestUrl="http://134.209.109.73:5001/api/add/item";
+    private static final String LoginRequestUrl="http://" + Config.host + ":" + Config.port + "/api/add/item";
     private final Map<String, String> params;
 
-    public ItemRequest(String username, String title, String body, Response.Listener<String> listener, Response.ErrorListener err) {
+    public ItemRequest(int user_id, String title, String body, Response.Listener<String> listener, Response.ErrorListener err) {
         super(Method.POST, LoginRequestUrl, listener, err);
         params=new HashMap<>();
-        params.put("user_id", "1");
+        params.put("user_id", user_id + "");
         params.put("title", title);
         params.put("description", body);
     }
