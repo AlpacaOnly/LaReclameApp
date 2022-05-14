@@ -94,15 +94,15 @@ public class CreateItemActivity extends AppCompatActivity {
         };
 
         SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
-        String username = "";
+        int user_id = -1;
         try {
             JSONObject user = new JSONObject(sh.getString("user", ""));
-            username = user.getString("username");
+            user_id = user.getInt("id");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        ItemRequest itemRequest = new ItemRequest(username, title, body, listener, new Response.ErrorListener() {
+        ItemRequest itemRequest = new ItemRequest(user_id, title, body, listener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(error);
