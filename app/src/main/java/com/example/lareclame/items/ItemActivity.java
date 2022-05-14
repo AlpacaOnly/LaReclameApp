@@ -2,6 +2,7 @@ package com.example.lareclame.items;
 
 import  android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,10 +13,23 @@ import com.example.lareclame.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ItemActivity extends AppCompatActivity {
+    TextView date;
+    TextView title;
+    TextView description;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
+
+        title = findViewById(R.id.item_title);
+        date = findViewById(R.id.item_date);
+        description = findViewById(R.id.item_description);
+        Intent intent = getIntent();
+
+        title.setText(intent.getStringExtra("title"));
+        date.setText(intent.getStringExtra("date"));
+        description.setText(intent.getStringExtra("description"));
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnItemSelectedListener(item -> {

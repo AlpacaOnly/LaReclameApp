@@ -1,5 +1,6 @@
 package com.example.lareclame.recyclerView;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lareclame.items.Item;
 import com.example.lareclame.R;
+import com.example.lareclame.items.ItemActivity;
 
 import java.util.ArrayList;
 
@@ -26,8 +28,8 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
 
         public MyViewHolder(final View View) {
             super(View);
-            tv_name = View.findViewById(R.id.item_name);
-            tv_date = View.findViewById(R.id.date);
+            tv_name = View.findViewById(R.id.item_title);
+            tv_date = View.findViewById(R.id.item_date);
         }
     }
 
@@ -43,6 +45,14 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         Item item = itemsList.get(position);
         holder.tv_name.setText(item.getTitle());
         holder.tv_date.setText(item.getDate());
+        holder.tv_name.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(), ItemActivity.class);
+            intent.putExtra("title", item.getTitle());
+            intent.putExtra("date", item.getDate());
+            intent.putExtra("description", item.getDescription());
+
+            view.getContext().startActivity(intent);
+        });
     }
 
     @Override

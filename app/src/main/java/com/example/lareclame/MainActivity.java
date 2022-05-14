@@ -134,9 +134,4 @@ public class MainActivity extends AppCompatActivity {
         });
         return super.onCreateOptionsMenu(menu);
     }
-
-    public void More_details(View view) {
-        Intent intent = new Intent(this, ItemActivity.class);
-        startActivity(intent);
-    }
 }
