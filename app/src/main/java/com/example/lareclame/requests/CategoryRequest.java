@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CategoryRequest extends StringRequest {
-    private static final String CategoryRequestUrl = "http://" + Config.host + ":" + Config.port + "/";
+    private static final String CategoryRequestUrl = "http://" + Config.host + ":" + Config.port + "/api/categories";
     private final Map<String, String> params;
 
     public CategoryRequest(Response.Listener<String> listener, Response.ErrorListener err) {
