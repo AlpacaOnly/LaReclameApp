@@ -72,6 +72,15 @@
         android:textColor="@color/white"
         android:background="@drawable/button_bg"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="LogOut"
+        android:text="Log Out"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"

@@ -59,7 +59,7 @@ public class CreateItemActivity extends AppCompatActivity implements AdapterView
 
         et_title = findViewById(R.id.title);
         et_body = findViewById(R.id.body);
-        spinner = (Spinner) findViewById(R.id.spinner);
+        spinner = findViewById(R.id.spinner);
 
         ArrayList<String> arraySpinner = new ArrayList<>();
 
@@ -69,7 +69,6 @@ public class CreateItemActivity extends AppCompatActivity implements AdapterView
             for (int i = 0; i < categories.length(); i++) {
                 JSONObject category = categories.getJSONObject(i);
                 arraySpinner.add(category.getString("category_name"));
-                arraySpinner.add(category.getString("id"));
 
             }
         } catch (JSONException e) {
@@ -104,6 +103,24 @@ public class CreateItemActivity extends AppCompatActivity implements AdapterView
     public void create_item(View view) {
         final String title = et_title.getText().toString();
         final String body = et_body.getText().toString();
+        final String spinner_text = spinner.getSelectedItem().toString();
+
+
+        int category_id = -1;
+        SharedPreferences preferences = getSharedPreferences("Categories", MODE_PRIVATE);
+        try {
+            JSONArray categories = new JSONArray(preferences.getString("categories", ""));
+            for (int i = 0; i < categories.length(); i++) {
+                JSONObject category = categories.getJSONObject(i);
+                String category_name = category.getString("category_name");
+                if (category_name.equals(spinner_text)) {
+                    category_id = category.getInt("id");
+                }
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         Response.Listener <String> listener = response -> {
             try {
@@ -123,6 +140,7 @@ public class CreateItemActivity extends AppCompatActivity implements AdapterView
             }
         };
 
+
         SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
         int user_id = -1;
         try {
@@ -132,7 +150,7 @@ public class CreateItemActivity extends AppCompatActivity implements AdapterView
             e.printStackTrace();
         }
 
-        ItemRequest itemRequest = new ItemRequest(user_id, title, body, listener, System.out::println);
+        ItemRequest itemRequest = new ItemRequest(user_id, category_id, title, body, listener, System.out::println);
 
         RequestQueue itemQueue = Volley.newRequestQueue(this);
         itemQueue.add(itemRequest);

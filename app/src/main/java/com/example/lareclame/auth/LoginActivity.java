@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.lareclame.ProfileActivity;
 import com.example.lareclame.R;
+import com.example.lareclame.requests.CategoryRequest;
 import com.example.lareclame.requests.LoginRequest;
 
 import org.json.JSONArray;
@@ -123,6 +124,10 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         };
+        CategoryRequest categoryRequest =new CategoryRequest(listener, System.out::println);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(categoryRequest);
     }
 
 }
