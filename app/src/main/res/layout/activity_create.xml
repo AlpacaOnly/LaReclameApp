@@ -45,16 +45,6 @@
                 app:layout_constraintStart_toStartOf="@id/imagebox"
                 app:layout_constraintTop_toBottomOf="@id/create_announcement" />
 
-            <ImageView
-                android:id="@+id/add_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:onClick="choose_image"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/choose_images" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -110,6 +100,28 @@
                 />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/price"
+                android:layout_marginTop="24dp"
+                android:text="Price*"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/spinner"
+                app:layout_constraintStart_toStartOf="@id/imagebox" />
+
+            <Spinner
+                android:id="@+id/spinner_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:inputType="text"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/product_name"
+                app:layout_constraintTop_toBottomOf="@id/price"
+                />
+
+            <TextView
                 android:id="@+id/description2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -117,7 +129,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/spinner"
+                app:layout_constraintTop_toBottomOf="@id/spinner_price"
                 app:layout_constraintStart_toStartOf="@id/product_name"
                 android:layout_marginTop="24dp"/>
 
