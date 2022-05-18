@@ -42,6 +42,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CreateItemActivity extends AppCompatActivity{
 
@@ -115,6 +116,7 @@ public class CreateItemActivity extends AppCompatActivity{
         final String title = et_title.getText().toString();
         final String body = et_body.getText().toString();
         final String spinner_text = spinner_category.getSelectedItem().toString();
+        final String price_type = spinner_price.getSelectedItem().toString().toLowerCase();
 
 
         int category_id = -1;
@@ -161,7 +163,7 @@ public class CreateItemActivity extends AppCompatActivity{
             e.printStackTrace();
         }
 
-        ItemRequest itemRequest = new ItemRequest(user_id, category_id, title, body, listener, System.out::println);
+        ItemRequest itemRequest = new ItemRequest(user_id, category_id, title, body, price_type, listener, System.out::println);
 
         RequestQueue itemQueue = Volley.newRequestQueue(this);
         itemQueue.add(itemRequest);
@@ -231,7 +233,7 @@ public class CreateItemActivity extends AppCompatActivity{
                 }
             } else {
                 //single image selected
-                file_count.setText(clipData.getItemCount()+" images uploaded");
+                file_count.setText("1 image uploaded");
                 Uri imageUri = data.getData();
                 Log.d("URI", imageUri.toString());
                 try {
