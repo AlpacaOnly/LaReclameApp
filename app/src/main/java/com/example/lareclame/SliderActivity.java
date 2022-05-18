@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 
 import java.util.ArrayList;
@@ -25,6 +26,6 @@ public class SliderActivity extends AppCompatActivity {
         images.add(new SlideModel(R.drawable.profile_photo, null));
         images.add(new SlideModel(R.drawable.profile_photo, null));
 
-        image_slider.setImageList(images);
+        image_slider.setImageList(images, ScaleTypes.CENTER_CROP);
     }
 }
