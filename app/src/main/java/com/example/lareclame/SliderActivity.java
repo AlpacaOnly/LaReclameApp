@@ -21,5 +21,10 @@ public class SliderActivity extends AppCompatActivity {
 
         ArrayList<SlideModel> images = new ArrayList<>();
         images.add(new SlideModel(R.drawable.profile_photo, null));
+        images.add(new SlideModel(R.drawable.profile_photo, null));
+        images.add(new SlideModel(R.drawable.profile_photo, null));
+        images.add(new SlideModel(R.drawable.profile_photo, null));
+
+        image_slider.setImageList(images);
     }
 }
