@@ -75,11 +75,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="165dp"
+        android:layout_marginTop="175dp"
         android:onClick="LogOut"
         android:text="Log Out"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/save_button" />
 
     <FrameLayout
         android:id="@+id/container"
