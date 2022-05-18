@@ -12,4 +12,8 @@
     <color name="light_grey">#f9f9f9</color>
     <color name="yellow">#ffda08</color>
     <color name="whhhw">#f2f3db</color>
+    <color name="red">#FF4C4C</color>
+    <color name="colorPrimary">#FF018790</color>
+    <color name="colorPrimaryDark">#669933</color>
+    <color name="colorAccent">#FF4C4C</color>
 </resources>

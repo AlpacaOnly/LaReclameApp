@@ -6,14 +6,26 @@
         <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/button_bg.xml" value="0.2075" />
         <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/button_bg2.xml" value="0.2075" />
         <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.2075" />
+        <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.2205" />
         <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.2075" />
+        <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/ic_baseline_notturnedin_24.xml" value="0.2205" />
+        <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/ic_baseline_shadow_24.xml" value="0.2205" />
+        <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/ic_baseline_turnedin_24.xml" value="0.2205" />
+        <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/selector.xml" value="0.2205" />
+        <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/toggle_selector.xml" value="0.2205" />
+        <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/layout-v26/activity_list.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/layout/activity_category.xml" value="0.20863616930312098" />
         <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/layout/activity_create.xml" value="0.2" />
+        <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/layout/activity_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/layout/activity_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/layout/activity_login.xml" value="0.1672710788757933" />
-        <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/layout/activity_main.xml" value="0.10526315789473684" />
+        <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/layout/activity_maps.xml" value="0.20863616930312098" />
         <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/layout/activity_profile.xml" value="0.1671195652173913" />
         <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/layout/activity_register.xml" value="0.16502778965369816" />
+        <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/layout/activity_settings.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/layout/list_items.xml" value="0.264" />
+        <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/layout/row_item.xml" value="0.2" />
         <entry key="..\:/Users/SyrymILubluTebya/AndroidStudioProjects/LaReclameApp/app/src/main/res/menu/menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/drawable/button_bg.xml" value="0.197" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclame/app/src/main/res/drawable/gradient.xml" value="0.197" />

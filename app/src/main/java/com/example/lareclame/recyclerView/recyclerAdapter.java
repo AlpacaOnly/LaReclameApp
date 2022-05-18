@@ -60,4 +60,4 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         return itemsList.size();
     }
 
-}
+        }

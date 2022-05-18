@@ -11,16 +11,13 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.lareclame.items.CreateItemActivity;
 import com.example.lareclame.items.Item;
-import com.example.lareclame.items.ItemActivity;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
 import com.example.lareclame.recyclerView.recyclerAdapter;
 import com.example.lareclame.requests.GetItemsRequest;
@@ -38,8 +35,10 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Item> itemsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private recyclerAdapter adapter;
-
     ArrayAdapter<String> arrayAdapter;
+
+    ArrayList<MainModel> mainModels;
+    MainAdapter mainAdapter;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -49,6 +48,23 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         itemsList = new ArrayList<>();
 
+        Integer[] categLogo = {R.drawable.crest, R.drawable.plusik, R.drawable.ic_baseline_notturnedin_24};
+        String[] categName ={"Crest", "Plus", "Heart"};
+
+        mainModels = new ArrayList<>();
+        for(int i = 0; i<categLogo.length; i++){
+            MainModel model = new MainModel(categLogo[i], categName[i]);
+            mainModels.add(model);
+        }
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(
+                MainActivity.this, LinearLayoutManager.HORIZONTAL,false
+        );
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        mainAdapter = new MainAdapter(mainModels, MainActivity.this);
+        recyclerView.setAdapter(mainAdapter);
         setItemInfo();
         setAdapter();
 
