@@ -24,39 +24,43 @@
                 android:textSize="38dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageButton"
+            
+            <LinearLayout
+                android:id="@+id/imagebox"
+                android:layout_marginStart="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/button_bg2"
-                android:onClick="choose_image"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/create_announcement" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/create_announcement">
 
-            <ImageView
-                android:id="@+id/ic_add_photo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="44dp"
-                android:src="@drawable/plusik"
-                app:flow_horizontalAlign="center"
-                app:layout_constraintStart_toStartOf="@id/imageButton"
-                app:layout_constraintTop_toBottomOf="@id/create_announcement" />
-
-            <TextView
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/choose_images"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Photo"
-                android:textColor="#252c2f"
-                android:textSize="24sp"
-                android:layout_marginTop="48dp"
-                android:layout_marginStart="18dp"
-                app:layout_constraintStart_toEndOf="@id/ic_add_photo"
-                app:layout_constraintTop_toBottomOf="@id/create_announcement"/>
+                android:onClick="choose_image"
+                android:text="Choose images"
+                android:textAllCaps="false"
+                android:textSize="18dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toStartOf="@id/imagebox"
+                app:layout_constraintTop_toBottomOf="@id/create_announcement" />
+
+            <ImageView
+                android:id="@+id/add_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:onClick="choose_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/choose_images" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/file_count"/>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/product_name"
@@ -67,8 +71,8 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginTop="24dp"
-                app:layout_constraintStart_toStartOf="@id/imageButton"
-                app:layout_constraintTop_toBottomOf="@id/imageButton"/>
+                app:layout_constraintStart_toStartOf="@id/imagebox"
+                app:layout_constraintTop_toBottomOf="@id/imagebox"/>
 
             <EditText
                 android:id="@+id/title"
@@ -79,7 +83,7 @@
                 android:inputType="text"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/product_name"
-                app:layout_constraintStart_toStartOf="@id/imageButton"/>
+                app:layout_constraintStart_toStartOf="@id/imagebox"/>
 
             <TextView
                 android:id="@+id/category"
@@ -140,7 +144,7 @@
                 android:textAllCaps="false"
                 android:textColor="#252c2f"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@id/imageButton"
+                app:layout_constraintStart_toStartOf="@id/imagebox"
                 app:layout_constraintTop_toBottomOf="@id/body" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

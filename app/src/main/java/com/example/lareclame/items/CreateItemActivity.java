@@ -1,24 +1,29 @@
 package com.example.lareclame.items;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Base64;
+
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
+
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,17 +44,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
-public class CreateItemActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class CreateItemActivity extends AppCompatActivity{
+
+    final int REQUEST_EXTERNAL_STORAGE = 100;
     EditText et_title;
     EditText et_body;
     Spinner spinner;
-
-    ImageView objectImageView;
-    private static final int PICK_IMAGE_REQUEST=100;
-    private Uri imageFilePath;
-    private Bitmap imageToStore;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -122,10 +127,10 @@ public class CreateItemActivity extends AppCompatActivity implements AdapterView
             e.printStackTrace();
         }
 
-        Response.Listener <String> listener = response -> {
+        Response.Listener<String> listener = response -> {
             try {
-                JSONObject jsonObject   = new JSONObject(response);
-                String status =jsonObject.getString("status");
+                JSONObject jsonObject = new JSONObject(response);
+                String status = jsonObject.getString("status");
                 System.out.println(status);
                 if (status.equals("ok")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(CreateItemActivity.this);
@@ -157,43 +162,80 @@ public class CreateItemActivity extends AppCompatActivity implements AdapterView
     }
 
     public void choose_image(View view) {
-        try {
-            Intent objectIntent = new Intent();
-            objectIntent.setType("image/*");
-
-            objectIntent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(objectIntent, PICK_IMAGE_REQUEST);
+        if (ActivityCompat.checkSelfPermission(CreateItemActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(CreateItemActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STORAGE);
+//                    return;
+        } else {
+            launchGalleryIntent();
         }
-        catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    public void launchGalleryIntent() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setType("image/*");
+        startActivityForResult(intent, REQUEST_EXTERNAL_STORAGE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    launchGalleryIntent();
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        try {
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode==PICK_IMAGE_REQUEST && resultCode==RESULT_OK && data!=null && data.getData()!=null){
-                imageFilePath = data.getData();
-                imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(), imageFilePath);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_EXTERNAL_STORAGE  && resultCode == RESULT_OK) {
+            final TextView file_count = findViewById(R.id.file_count);
+            final List<Bitmap> bitmaps = new ArrayList<>();
+            ClipData clipData = data.getClipData();
 
-                System.out.println(imageFilePath);
-                objectImageView.setImageBitmap(imageToStore);
+            if (clipData != null) {
+                //multiple images selected
+                file_count.setText(clipData.getItemCount()+" images uploaded");
+                for (int i = 0; i < clipData.getItemCount(); i++) {
+                    Uri imageUri = clipData.getItemAt(i).getUri();
+                    Log.d("URI", imageUri.toString());
+                    try {
+                        InputStream inputStream = getContentResolver().openInputStream(imageUri);
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        bitmaps.add(bitmap);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                //single image selected
+                file_count.setText(clipData.getItemCount()+" images uploaded");
+                Uri imageUri = data.getData();
+                Log.d("URI", imageUri.toString());
+                try {
+                    InputStream inputStream = getContentResolver().openInputStream(imageUri);
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    bitmaps.add(bitmap);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String text = adapterView.getItemAtPosition(i).toString();
-        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 }
