@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Item> itemsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private recyclerAdapter adapter;
+    private SearchView searchView;
 
     ArrayAdapter<String> arrayAdapter;
 
@@ -48,9 +49,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
         itemsList = new ArrayList<>();
+        searchView = findViewById(R.id.search);
 
-        setItemInfo();
+
+        setItemInfo("");
         setAdapter();
+
+        searchView.setQueryHint("Type Here to Search");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                System.out.println("asdasd");
+                String search_text = searchView.getQuery().toString().toLowerCase();
+                setItemInfo(search_text);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                return false;
+            }
+        });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.ic_home);
@@ -82,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private void setItemInfo() {
+    private void setItemInfo(String search_text) {
         Response.Listener <String> listener = response -> {
             try {
                 JSONObject jsonObject = new JSONObject(response);
@@ -90,48 +111,50 @@ public class MainActivity extends AppCompatActivity {
 
                 if (status.equals("ok")) {
                     JSONArray items = jsonObject.getJSONArray("items");
+                    itemsList = new ArrayList<>();
                     for (int i = 0; i < items.length(); i++) {
                         JSONObject itemJSON = items.getJSONObject(i);
                         Item item = new Item(itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"));
                         itemsList.add(item);
-                        adapter = new recyclerAdapter(itemsList);
-                        recyclerView.setAdapter(adapter);
                     }
+                    adapter = new recyclerAdapter(itemsList);
+                    recyclerView.setAdapter(adapter);
                 }
             } catch (JSONException | ParseException e) {
                 e.printStackTrace();
             }
         };
 
-        GetItemsRequest getItemsRequest = new GetItemsRequest(listener, System.out::println);
+        GetItemsRequest getItemsRequest = new GetItemsRequest(listener, System.out::println, search_text);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(getItemsRequest);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.menu, menu);
-
-        MenuItem menuItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Type Here to Search");
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                arrayAdapter.getFilter().filter(newText);
-
-                return false;
-            }
-        });
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//
+//        getMenuInflater().inflate(R.menu.menu, menu);
+//
+//        MenuItem menuItem = menu.findItem(R.id.action_search);
+//        SearchView searchView = (SearchView) menuItem.getActionView();
+//        searchView.setQueryHint("Type Here to Search");
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                System.out.println("asdasd");
+//                String search_text = searchView.getQuery().toString().toLowerCase();
+//                setItemInfo(search_text);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//
+//                return false;
+//            }
+//        });
+//        return super.onCreateOptionsMenu(menu);
+//    }
 }

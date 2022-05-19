@@ -36,6 +36,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/button_bg.xml" value="0.1495" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/button_bg2.xml" value="0.1495" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.223" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.145" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/item_bg.xml" value="0.1495" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/round_outline.xml" value="0.1495" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclameApp/app/src/main/res/drawable/rounded_edittext.xml" value="0.1425" />
@@ -54,6 +55,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclameApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclameApp/app/src/main/res/menu/menu.xml" value="0.19324497648567765" />
         <entry key="..\:/Users/user/AndroidStudioProjects/LaReclameApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1525" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/LaReclameApp/app/src/main/res/xml/searchable.xml" value="0.20778110303548525" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.17325227963525835" />
       </map>
     </option>
