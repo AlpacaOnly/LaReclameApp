@@ -16,7 +16,6 @@ import android.view.View;
 
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,17 +24,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.lareclame.MainActivity;
 import com.example.lareclame.ProfileActivity;
 import com.example.lareclame.R;
 import com.example.lareclame.SettingsActivity;
-import com.example.lareclame.requests.CategoryRequest;
 import com.example.lareclame.requests.ItemRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -43,18 +38,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CreateItemActivity extends AppCompatActivity{
 
     final int REQUEST_EXTERNAL_STORAGE = 100;
     EditText et_title;
     EditText et_body;
-    Spinner spinner;
+    Spinner spinner_category;
+    Spinner spinner_price;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -64,7 +60,18 @@ public class CreateItemActivity extends AppCompatActivity{
 
         et_title = findViewById(R.id.title);
         et_body = findViewById(R.id.body);
-        spinner = findViewById(R.id.spinner);
+        spinner_category = findViewById(R.id.spinner);
+        spinner_price = findViewById(R.id.spinner_price);
+
+        final ArrayList<String> list = new ArrayList<String>();
+        list.add("Fixed");
+        list.add("Free");
+        list.add("Negotiable");
+
+        ArrayAdapter<String> adp1 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, list);
+        adp1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_price.setAdapter(adp1);
 
         ArrayList<String> arraySpinner = new ArrayList<>();
 
@@ -83,7 +90,7 @@ public class CreateItemActivity extends AppCompatActivity{
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        spinner_category.setAdapter(adapter);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.ic_create_announcement);
@@ -108,7 +115,8 @@ public class CreateItemActivity extends AppCompatActivity{
     public void create_item(View view) {
         final String title = et_title.getText().toString();
         final String body = et_body.getText().toString();
-        final String spinner_text = spinner.getSelectedItem().toString();
+        final String spinner_text = spinner_category.getSelectedItem().toString();
+        final String price_type = spinner_price.getSelectedItem().toString().toLowerCase();
 
 
         int category_id = -1;
@@ -155,7 +163,7 @@ public class CreateItemActivity extends AppCompatActivity{
             e.printStackTrace();
         }
 
-        ItemRequest itemRequest = new ItemRequest(user_id, category_id, title, body, listener, System.out::println);
+        ItemRequest itemRequest = new ItemRequest(user_id, category_id, title, body, price_type, listener, System.out::println);
 
         RequestQueue itemQueue = Volley.newRequestQueue(this);
         itemQueue.add(itemRequest);
@@ -225,7 +233,7 @@ public class CreateItemActivity extends AppCompatActivity{
                 }
             } else {
                 //single image selected
-                file_count.setText(clipData.getItemCount()+" images uploaded");
+                file_count.setText("1 image uploaded");
                 Uri imageUri = data.getData();
                 Log.d("URI", imageUri.toString());
                 try {
