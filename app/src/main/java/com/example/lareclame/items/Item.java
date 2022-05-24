@@ -1,10 +1,24 @@
 package com.example.lareclame.items;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.example.lareclame.requests.ImageRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -15,12 +29,12 @@ public class Item {
     private String title;
     private String description;
     private String date;
+    private String price_type;
 
     public Item(String title, String description, String date) throws ParseException {
         this.title = title;
         this.description = description;
         this.date = formatDate(date);
-        System.out.println(this.date);
     }
 
     public String formatDate(String dateString) throws ParseException {
