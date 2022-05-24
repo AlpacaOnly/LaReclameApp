@@ -32,7 +32,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
             super(View);
             tv_name = View.findViewById(R.id.item_title);
             tv_date = View.findViewById(R.id.item_date);
-            tv_price = View.findViewById(R.id.price);
+            tv_price = View.findViewById(R.id.price_type);
         }
     }
 
