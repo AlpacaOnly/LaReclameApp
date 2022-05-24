@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     itemsList = new ArrayList<>();
                     for (int i = 0; i < items.length(); i++) {
                         JSONObject itemJSON = items.getJSONObject(i);
-                        Item item = new Item(itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"));
+                        Item item = new Item(itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"));
                         itemsList.add(item);
                     }
                     adapter = new recyclerAdapter(itemsList);

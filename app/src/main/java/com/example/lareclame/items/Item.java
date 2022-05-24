@@ -30,11 +30,15 @@ public class Item {
     private String description;
     private String date;
     private String price_type;
+    private int price;
 
-    public Item(String title, String description, String date) throws ParseException {
+    public Item(String title, String description, String date, String price_type, int price) throws ParseException {
         this.title = title;
         this.description = description;
         this.date = formatDate(date);
+        String price_capitalized = price_type.substring(0, 1).toUpperCase() + price_type.substring(1);
+        this.price_type = price_capitalized;
+        this.price = price;
     }
 
     public String formatDate(String dateString) throws ParseException {
@@ -42,6 +46,14 @@ public class Item {
         Date date = simpleDateFormat.parse(dateString);
         simpleDateFormat.applyPattern("hh:mm dd-MM-yyyy");
         return simpleDateFormat.format(date);
+    }
+
+    public String getPrice_type() {
+        return price_type;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     public String getTitle() {
