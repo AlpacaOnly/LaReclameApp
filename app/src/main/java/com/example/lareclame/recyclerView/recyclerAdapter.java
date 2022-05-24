@@ -25,14 +25,14 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private final TextView tv_name;
         private final TextView tv_date;
-        private final TextView tv_price;
+        private final TextView tv_price_type;
 
 
         public MyViewHolder(final View View) {
             super(View);
             tv_name = View.findViewById(R.id.item_title);
             tv_date = View.findViewById(R.id.item_date);
-            tv_price = View.findViewById(R.id.price_type);
+            tv_price_type = View.findViewById(R.id.tv_price_type);
         }
     }
 
@@ -49,15 +49,16 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         holder.tv_name.setText(item.getTitle());
         holder.tv_date.setText(item.getDate());
         if (item.getPrice_type().equals("Fixed")) {
-            holder.tv_price.setText(item.getPrice()+"");
+            holder.tv_price_type.setText(item.getPrice()+"");
         } else {
-            holder.tv_price.setText(item.getPrice_type());
+            holder.tv_price_type.setText(item.getPrice_type());
         }
         holder.tv_name.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), ItemActivity.class);
             intent.putExtra("title", item.getTitle());
             intent.putExtra("date", item.getDate());
             intent.putExtra("description", item.getDescription());
+            intent.putExtra("price_type", item.getPrice_type());
 
             view.getContext().startActivity(intent);
         });

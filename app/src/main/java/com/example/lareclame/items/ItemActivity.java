@@ -16,6 +16,7 @@ public class ItemActivity extends AppCompatActivity {
     TextView date;
     TextView title;
     TextView description;
+    TextView price_type;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,11 +26,13 @@ public class ItemActivity extends AppCompatActivity {
         title = findViewById(R.id.item_title);
         date = findViewById(R.id.item_date);
         description = findViewById(R.id.item_description);
+        price_type = findViewById(R.id.tv_price_type);
         Intent intent = getIntent();
 
         title.setText(intent.getStringExtra("title"));
         date.setText(intent.getStringExtra("date"));
         description.setText(intent.getStringExtra("description"));
+        price_type.setText(intent.getStringExtra("price_type"));
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnItemSelectedListener(item -> {
