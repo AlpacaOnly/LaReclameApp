@@ -48,7 +48,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         Item item = itemsList.get(position);
         holder.tv_name.setText(item.getTitle());
         holder.tv_date.setText(item.getDate());
-        if (item.getPrice_type().equals("fixed")) {
+        if (item.getPrice_type().equals("Fixed")) {
             holder.tv_price.setText(item.getPrice()+"");
         } else {
             holder.tv_price.setText(item.getPrice_type());
