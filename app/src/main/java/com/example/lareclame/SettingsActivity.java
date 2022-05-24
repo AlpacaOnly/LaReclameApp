@@ -69,12 +69,18 @@ public class SettingsActivity extends AppCompatActivity {
                 String status = jsonObject.getString("status");
                 System.out.println(status);
                 if (status.equals("ok")) {
+                    SharedPreferences sh =  getSharedPreferences("Login", MODE_PRIVATE);
+                    try {
+                        JSONObject user = new JSONObject(sh.getString("user", ""));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
                     builder.setMessage("Info was updated").setPositiveButton("ok", null).show();
                 } else {
                     String error = jsonObject.getString("error");
                     AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-                    builder.setMessage(error).setNegativeButton("Some errors", null).create().show();
+                    builder.setMessage(error).setNegativeButton("Retry", null).create().show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
