@@ -27,6 +27,7 @@ import org.json.JSONObject;
 public class SettingsActivity extends AppCompatActivity {
     EditText et_username;
     EditText et_password;
+    EditText et_bio;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -36,6 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         et_username = findViewById(R.id.et_username);
         et_password = findViewById(R.id.et_password);
+        et_bio = findViewById(R.id.et_bio);
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
@@ -61,7 +63,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void update_info (View view) {
         final String username = et_username.getText().toString();
         final String password = et_password.getText().toString();
-        final String bio = "";
+        final String bio = et_bio.getText().toString();
 
         Response.Listener<String> listener = response -> {
             try {
@@ -70,8 +72,13 @@ public class SettingsActivity extends AppCompatActivity {
                 System.out.println(status);
                 if (status.equals("ok")) {
                     SharedPreferences sh =  getSharedPreferences("Login", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sh.edit();
                     try {
                         JSONObject user = new JSONObject(sh.getString("user", ""));
+                        if (!username.equals("")) user.put("username", username);
+                        if (!bio.equals("")) user.put("bio", bio);
+                        editor.putString("user", user.toString());
+                        editor.apply();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
