@@ -92,27 +92,31 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/save_button"
-        android:layout_width="128dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/button_bg"
         android:onClick="update_info"
+        android:textAllCaps="false"
         android:text="Save"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/change_bio" />
+        app:layout_constraintBottom_toTopOf="@id/tv_log_out"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/tv_log_out"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="65dp"
-
+        android:layout_marginHorizontal="16dp"
         android:onClick="LogOut"
         android:text="Log Out"
-        android:textColor="#da2727"
+        android:background="@drawable/log_out_bg"
+        android:textColor="@color/white"
         android:textSize="20sp"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="@id/container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
