@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         searchView = findViewById(R.id.search);
 
 
-        setItemInfo("");
+        setItemInfo("", 0);
         setAdapter();
 
         searchView.setQueryHint("Type Here to Search");
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 System.out.println("asdasd");
                 String search_text = searchView.getQuery().toString().toLowerCase();
-                setItemInfo(search_text);
+                setItemInfo(search_text, 0);
                 return false;
             }
 
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        recyclerAdapter adapter =new recyclerAdapter(itemsList);
+        recyclerAdapter adapter = new recyclerAdapter(itemsList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         RecyclerViewMargin decoration = new RecyclerViewMargin(10, 1);
         recyclerView.addItemDecoration(decoration);
@@ -103,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private void setItemInfo(String search_text) {
-        Response.Listener <String> listener = response -> {
+    private void setItemInfo(String search_text, int category_id) {
+        Response.Listener<String> listener = response -> {
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 String status = jsonObject.getString("status");
@@ -125,36 +125,35 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        GetItemsRequest getItemsRequest = new GetItemsRequest(listener, System.out::println, search_text);
+        GetItemsRequest getItemsRequest = new GetItemsRequest(listener, System.out::println, search_text, category_id);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(getItemsRequest);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//
-//        MenuItem menuItem = menu.findItem(R.id.action_search);
-//        SearchView searchView = (SearchView) menuItem.getActionView();
-//        searchView.setQueryHint("Type Here to Search");
-//
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                System.out.println("asdasd");
-//                String search_text = searchView.getQuery().toString().toLowerCase();
-//                setItemInfo(search_text);
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//
-//                return false;
-//            }
-//        });
-//        return super.onCreateOptionsMenu(menu);
-//    }
+    public void accommodations(View view) {
+        setItemInfo("", 1);
+    }
+
+    public void buy_sale(View view) {
+        setItemInfo("", 2);
+    }
+
+    public void lost_and_found(View view) {
+        setItemInfo("", 3);
+    }
+
+    public void project(View view) {
+        setItemInfo("", 4);
+    }
+
+    public void services(View view) {
+        setItemInfo("", 5);
+    }
+
+    public void other(View view) {
+        setItemInfo("", 6);
+    }
+
+
 }
