@@ -49,6 +49,7 @@ public class CreateItemActivity extends AppCompatActivity{
     final int REQUEST_EXTERNAL_STORAGE = 100;
     EditText et_title;
     EditText et_body;
+    EditText et_price;
     Spinner spinner_category;
     Spinner spinner_price;
 
@@ -58,6 +59,7 @@ public class CreateItemActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
 
+        et_price = findViewById(R.id.et_price);
         et_title = findViewById(R.id.title);
         et_body = findViewById(R.id.body);
         spinner_category = findViewById(R.id.spinner);
@@ -117,6 +119,7 @@ public class CreateItemActivity extends AppCompatActivity{
         final String body = et_body.getText().toString();
         final String spinner_text = spinner_category.getSelectedItem().toString();
         final String price_type = spinner_price.getSelectedItem().toString().toLowerCase();
+        final int price = Integer.parseInt(et_price.getText().toString());
 
 
         int category_id = -1;
@@ -163,7 +166,7 @@ public class CreateItemActivity extends AppCompatActivity{
             e.printStackTrace();
         }
 
-        ItemRequest itemRequest = new ItemRequest(user_id, category_id, title, body, price_type, listener, System.out::println);
+        ItemRequest itemRequest = new ItemRequest(user_id, category_id, title, body, price_type, price, listener, System.out::println);
 
         RequestQueue itemQueue = Volley.newRequestQueue(this);
         itemQueue.add(itemRequest);

@@ -12,7 +12,7 @@ public class ItemRequest extends StringRequest {
     private static final String LoginRequestUrl="http://" + Config.host + ":" + Config.port + "/api/add/item";
     private final Map<String, String> params;
 
-    public ItemRequest(int user_id, int category_id, String title, String body, String price_type, Response.Listener<String> listener, Response.ErrorListener err) {
+    public ItemRequest(int user_id, int category_id, String title, String body, String price_type, int price, Response.Listener<String> listener, Response.ErrorListener err) {
         super(Method.POST, LoginRequestUrl, listener, err);
         params=new HashMap<>();
         params.put("user_id", user_id + "");
@@ -20,6 +20,7 @@ public class ItemRequest extends StringRequest {
         params.put("title", title);
         params.put("description", body);
         params.put("price_type", price_type);
+        params.put("price", price+"");
     }
 
     @Nullable
