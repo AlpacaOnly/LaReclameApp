@@ -61,11 +61,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
         String nm = "";
+        String bio = "";
         int user_id = 0;
         try {
             JSONObject user = new JSONObject(sh.getString("user", ""));
             user_id = user.getInt("id");
             nm = user.getString("username");
+            bio = user.getString("bio");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -75,6 +77,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         final TextView tv_username = (TextView) findViewById(R.id.username);
         tv_username.setText(nm);
+
+        final TextView tv_bio = (TextView) findViewById(R.id.tv_bio);
+        tv_bio.setText(bio);
 
         ProfileImage = (ImageView) findViewById(R.id.user_photo);
 
