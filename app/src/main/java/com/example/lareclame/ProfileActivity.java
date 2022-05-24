@@ -17,22 +17,35 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.lareclame.items.CreateItemActivity;
+import com.example.lareclame.items.Item;
+import com.example.lareclame.recyclerView.RecyclerViewMargin;
+import com.example.lareclame.recyclerView.recyclerAdapter;
+import com.example.lareclame.requests.GetItemsRequest;
 import com.example.lareclame.requests.UploadImageRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    private ArrayList<Item> itemsList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private recyclerAdapter adapter;
     private ImageView ProfileImage;
     private static final int PICK_IMAGE = 1;
     Uri ImageUrl;
@@ -43,15 +56,22 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        recyclerView = findViewById(R.id.recyclerView);
+        itemsList = new ArrayList<>();
 
         SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
         String nm = "";
+        int user_id = 0;
         try {
             JSONObject user = new JSONObject(sh.getString("user", ""));
+            user_id = user.getInt("id");
             nm = user.getString("username");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        setItemInfo("", 0, user_id);
+        setAdapter();
 
         final TextView tv_username = (TextView) findViewById(R.id.username);
         tv_username.setText(nm);
@@ -146,6 +166,44 @@ public class ProfileActivity extends AppCompatActivity {
         byte[] b = baos.toByteArray();
 
         return Base64.encodeToString(b, Base64.DEFAULT);
+    }
+
+    private void setItemInfo(String search_text, int category_id, int user_id) {
+        Response.Listener<String> listener = response -> {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                String status = jsonObject.getString("status");
+
+                if (status.equals("ok")) {
+                    JSONArray items = jsonObject.getJSONArray("items");
+                    itemsList = new ArrayList<>();
+                    for (int i = 0; i < items.length(); i++) {
+                        JSONObject itemJSON = items.getJSONObject(i);
+                        Item item = new Item(itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"));
+                        itemsList.add(item);
+                    }
+                    adapter = new recyclerAdapter(itemsList);
+                    recyclerView.setAdapter(adapter);
+                }
+            } catch (JSONException | ParseException e) {
+                e.printStackTrace();
+            }
+        };
+
+        GetItemsRequest getItemsRequest = new GetItemsRequest(listener, System.out::println, search_text, category_id, user_id);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(getItemsRequest);
+    }
+
+    private void setAdapter() {
+        recyclerAdapter adapter = new recyclerAdapter(itemsList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerViewMargin decoration = new RecyclerViewMargin(10, 1);
+        recyclerView.addItemDecoration(decoration);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
     }
 
 }

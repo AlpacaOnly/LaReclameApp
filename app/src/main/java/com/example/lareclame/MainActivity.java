@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        GetItemsRequest getItemsRequest = new GetItemsRequest(listener, System.out::println, search_text, category_id);
+        GetItemsRequest getItemsRequest = new GetItemsRequest(listener, System.out::println, search_text, category_id, 0);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(getItemsRequest);
