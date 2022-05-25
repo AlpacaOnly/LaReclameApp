@@ -1,8 +1,11 @@
 package com.example.lareclame.recyclerView;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +29,15 @@ import com.example.lareclame.requests.ImageRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHolder> {
@@ -79,10 +88,16 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         }
         holder.tv_name.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), ItemActivity.class);
+            intent.putExtra("id", item.getId());
             intent.putExtra("title", item.getTitle());
             intent.putExtra("date", item.getDate());
             intent.putExtra("description", item.getDescription());
             intent.putExtra("price_type", item.getPrice_type());
+
+
+//            Bundle args = new Bundle();
+//            args.putSerializable("ARRAYLIST", (Serializable) bytes);
+//            intent.putExtra("BUNDLE", args);
 
             view.getContext().startActivity(intent);
         });
@@ -92,7 +107,5 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     public int getItemCount() {
         return itemsList.size();
     }
-
-
 
 }

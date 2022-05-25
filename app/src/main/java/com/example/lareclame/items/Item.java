@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Item {
+    private int id;
     private String title;
     private String description;
     private String date;
@@ -37,7 +38,8 @@ public class Item {
     private int price;
     private ArrayList<Bitmap> pictures;
 
-    public Item(String title, String description, String date, String price_type, int price, ArrayList<Bitmap> pictures) throws ParseException {
+    public Item(int id, String title, String description, String date, String price_type, int price, ArrayList<Bitmap> pictures) throws ParseException {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.date = formatDate(date);
@@ -56,6 +58,10 @@ public class Item {
 
     public ArrayList<Bitmap> getPictures() {
         return pictures;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getPrice_type() {

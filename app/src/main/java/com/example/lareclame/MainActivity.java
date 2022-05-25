@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                                         bitmaps.add(bitmap);
                                     }
 
-                                    Item item = new Item(itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"), bitmaps);
+                                    Item item = new Item(itemJSON.getInt("id"), itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"), bitmaps);
                                     itemsList.add(item);
                                     System.out.println(itemsList);
                                     adapter = new recyclerAdapter(itemsList);
