@@ -204,6 +204,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                                     Item item = new Item(itemJSON.getInt("id"), itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"), bitmaps);
                                     itemsList.add(item);
+                                    adapter = new recyclerAdapter(itemsList);
+                                    recyclerView.setAdapter(adapter);
                                 } catch (UnsupportedEncodingException | ParseException e) {
                                     e.printStackTrace();
                                 }
@@ -217,11 +219,8 @@ public class ProfileActivity extends AppCompatActivity {
                         ImageRequest imageRequest = new ImageRequest("item-pictures", itemJSON.getJSONArray("pictures"), listener2, System.out::println);
                         RequestQueue requestQueue = Volley.newRequestQueue(this);
                         requestQueue.add(imageRequest);
-
-
                     }
-                    adapter = new recyclerAdapter(itemsList);
-                    recyclerView.setAdapter(adapter);
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
