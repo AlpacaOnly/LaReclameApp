@@ -8,11 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.android.volley.RequestQueue;
@@ -24,12 +28,16 @@ import com.example.lareclame.items.ItemActivity;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
 import com.example.lareclame.recyclerView.recyclerAdapter;
 import com.example.lareclame.requests.GetItemsRequest;
+import com.example.lareclame.requests.ImageRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -114,13 +122,42 @@ public class MainActivity extends AppCompatActivity {
                     itemsList = new ArrayList<>();
                     for (int i = 0; i < items.length(); i++) {
                         JSONObject itemJSON = items.getJSONObject(i);
-                        Item item = new Item(itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"));
-                        itemsList.add(item);
+
+                        Response.Listener<String> listener2 = response2 -> {
+                            try {
+                                JSONObject jsonObject2 = new JSONObject(response2);
+                                try {
+                                    JSONArray pictures = jsonObject2.getJSONArray("image");
+                                    ArrayList<Bitmap> bitmaps = new ArrayList<>();
+                                    for (int j = 0; j < pictures.length(); j++) {
+                                        String image_base64 = URLDecoder.decode(pictures.getString(j), StandardCharsets.UTF_8.name());
+                                        byte[] b = Base64.decode(image_base64, Base64.DEFAULT);
+                                        Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+                                        bitmaps.add(bitmap);
+                                    }
+
+                                    Item item = new Item(itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"), bitmaps);
+                                    itemsList.add(item);
+                                    System.out.println(itemsList);
+                                    adapter = new recyclerAdapter(itemsList);
+                                    recyclerView.setAdapter(adapter);
+                                } catch (UnsupportedEncodingException | ParseException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        };
+
+                        ImageRequest imageRequest = new ImageRequest("item-pictures", itemJSON.getJSONArray("pictures"), listener2, System.out::println);
+                        RequestQueue requestQueue = Volley.newRequestQueue(this);
+                        requestQueue.add(imageRequest);
                     }
-                    adapter = new recyclerAdapter(itemsList);
-                    recyclerView.setAdapter(adapter);
+
                 }
-            } catch (JSONException | ParseException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         };
@@ -129,6 +166,10 @@ public class MainActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(getItemsRequest);
+    }
+
+    private void setImage(ImageView item_photo, String picturePath) {
+
     }
 
     public void accommodations(View view) {

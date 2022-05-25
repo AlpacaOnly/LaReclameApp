@@ -29,6 +29,7 @@ import com.example.lareclame.items.Item;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
 import com.example.lareclame.recyclerView.recyclerAdapter;
 import com.example.lareclame.requests.GetItemsRequest;
+import com.example.lareclame.requests.ImageRequest;
 import com.example.lareclame.requests.UploadImageRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -38,6 +39,9 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -184,13 +188,42 @@ public class ProfileActivity extends AppCompatActivity {
                     itemsList = new ArrayList<>();
                     for (int i = 0; i < items.length(); i++) {
                         JSONObject itemJSON = items.getJSONObject(i);
-                        Item item = new Item(itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"));
-                        itemsList.add(item);
+
+                        Response.Listener<String> listener2 = response2 -> {
+                            try {
+                                JSONObject jsonObject2 = new JSONObject(response2);
+                                try {
+                                    JSONArray pictures = jsonObject2.getJSONArray("image");
+                                    ArrayList<Bitmap> bitmaps = new ArrayList<>();
+                                    for (int j = 0; j < pictures.length(); j++) {
+                                        String image_base64 = URLDecoder.decode(pictures.getString(j), StandardCharsets.UTF_8.name());
+                                        byte[] b = Base64.decode(image_base64, Base64.DEFAULT);
+                                        Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+                                        bitmaps.add(bitmap);
+                                    }
+
+                                    Item item = new Item(itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"), bitmaps);
+                                    itemsList.add(item);
+                                } catch (UnsupportedEncodingException | ParseException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        };
+
+                        ImageRequest imageRequest = new ImageRequest("item-pictures", itemJSON.getJSONArray("pictures"), listener2, System.out::println);
+                        RequestQueue requestQueue = Volley.newRequestQueue(this);
+                        requestQueue.add(imageRequest);
+
+
                     }
                     adapter = new recyclerAdapter(itemsList);
                     recyclerView.setAdapter(adapter);
                 }
-            } catch (JSONException | ParseException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         };

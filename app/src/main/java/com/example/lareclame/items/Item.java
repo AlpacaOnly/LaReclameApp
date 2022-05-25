@@ -4,7 +4,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Build;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.RequiresApi;
 
@@ -13,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.lareclame.requests.ImageRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,6 +26,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Item {
@@ -31,14 +35,16 @@ public class Item {
     private String date;
     private String price_type;
     private int price;
+    private ArrayList<Bitmap> pictures;
 
-    public Item(String title, String description, String date, String price_type, int price) throws ParseException {
+    public Item(String title, String description, String date, String price_type, int price, ArrayList<Bitmap> pictures) throws ParseException {
         this.title = title;
         this.description = description;
         this.date = formatDate(date);
         String price_capitalized = price_type.substring(0, 1).toUpperCase() + price_type.substring(1);
         this.price_type = price_capitalized;
         this.price = price;
+        this.pictures = pictures;
     }
 
     public String formatDate(String dateString) throws ParseException {
@@ -46,6 +52,10 @@ public class Item {
         Date date = simpleDateFormat.parse(dateString);
         simpleDateFormat.applyPattern("hh:mm dd-MM-yyyy");
         return simpleDateFormat.format(date);
+    }
+
+    public ArrayList<Bitmap> getPictures() {
+        return pictures;
     }
 
     public String getPrice_type() {
