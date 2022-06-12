@@ -19,7 +19,7 @@
             android:layout_width="100dp"
             android:layout_height="108dp"
             android:layout_marginStart="8dp"
-            android:src="@drawable/example_item_photo"
+            android:src="@drawable/no_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
