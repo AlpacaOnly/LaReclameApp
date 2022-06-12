@@ -5,6 +5,7 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.widget.ImageView;
@@ -52,6 +53,7 @@ public class ItemActivity extends AppCompatActivity {
     TextView price_type;
     ImageSlider image_slider;
     ViewFlipper imageFlipper;
+    String fileName = "/app/res\\drawable\\no_image.png";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +85,7 @@ public class ItemActivity extends AppCompatActivity {
                         Response.Listener<String> listener2 = response2 -> {
                             try {
                                 JSONObject itemJSON = new JSONObject(response2);
+                                boolean is_image_exist = false;
                                 try {
                                     JSONArray pictures = itemJSON.getJSONArray("image");
                                     ArrayList<Bitmap> bitmaps = new ArrayList<>();
@@ -93,6 +96,14 @@ public class ItemActivity extends AppCompatActivity {
                                         ImageView image = new ImageView(getApplicationContext());
                                         image.setImageBitmap(bitmap);
                                         imageFlipper.addView(image);
+                                        is_image_exist = true;
+                                    }
+
+                                    if (!is_image_exist) {
+                                        ImageView imgView = new ImageView(getApplicationContext());
+                                        Drawable drawable  = getResources().getDrawable(R.drawable.no_image);
+                                        imgView.setImageDrawable(drawable);
+                                        imageFlipper.addView(imgView);
                                     }
 
                                     imageFlipper.setFlipInterval( 2000 ); //5s intervals

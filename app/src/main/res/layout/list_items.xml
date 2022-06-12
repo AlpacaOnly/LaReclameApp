@@ -32,9 +32,22 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/item_photo"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/Published"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:text="Published:"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/item_photo"
+            app:layout_constraintTop_toBottomOf="@id/item_title" />
 
         <TextView
             android:id="@+id/item_date"
@@ -42,10 +55,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/today_11_23"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/item_photo"
+            app:layout_constraintStart_toEndOf="@id/Published"
             app:layout_constraintTop_toBottomOf="@+id/item_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cost"
+            android:text="Cost:"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_photo"
+            app:layout_constraintTop_toBottomOf="@id/item_date">
+        </TextView>
 
         <TextView
             android:id="@+id/tv_price_type"
@@ -53,14 +76,33 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="@string/_19_500_000"
-            android:textColor="@color/black"
+            android:text="Free"
             android:textSize="16sp"
-            android:textStyle="bold"
+            android:layout_marginStart="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/item_photo"
+            app:layout_constraintStart_toEndOf="@id/cost"
             app:layout_constraintTop_toBottomOf="@id/item_date" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/seller"
+            android:text="Seller:"
+            android:layout_marginStart="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_price_type"
+            app:layout_constraintTop_toBottomOf="@id/item_date">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mercurial"
+            android:layout_marginStart="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/seller"
+            app:layout_constraintTop_toBottomOf="@id/item_date">
+        </TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
