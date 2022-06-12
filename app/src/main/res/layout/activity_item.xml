@@ -88,8 +88,8 @@
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="32dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/profile_modified"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/item_description" />
 
@@ -102,9 +102,17 @@
         android:layout_marginTop="32dp"
         android:text="@string/name"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/profile_photo"
         app:layout_constraintTop_toBottomOf="@id/item_description" />
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/profile_photo"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
