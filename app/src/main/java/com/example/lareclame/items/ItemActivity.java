@@ -8,11 +8,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,16 +24,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.lareclame.MainActivity;
 import com.example.lareclame.ProfileActivity;
 import com.example.lareclame.R;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
-import com.example.lareclame.recyclerView.recyclerAdapter;
+import com.example.lareclame.recyclerView.recyclerAdapterItem;
+import com.example.lareclame.recyclerView.recyclerAdapterReview;
 import com.example.lareclame.requests.GetItemRequest;
-import com.example.lareclame.requests.GetItemsRequest;
 import com.example.lareclame.requests.ImageRequest;
+import com.example.lareclame.requests.ReviewRequest;
+import com.example.lareclame.reviews.Review;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
@@ -45,10 +47,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ItemActivity extends AppCompatActivity {
     TextView date;
@@ -57,8 +56,9 @@ public class ItemActivity extends AppCompatActivity {
     TextView price_type;
     ImageSlider image_slider;
     ViewFlipper imageFlipper;
+    ArrayList<Review> reviewList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private recyclerAdapter adapter;
+    private recyclerAdapterReview adapter;
     String fileName = "/app/res\\drawable\\no_image.png";
 
     @Override
@@ -86,7 +86,6 @@ public class ItemActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(response);
                 try {
                     String status = jsonObject.getString("status");
-                    System.out.println(jsonObject.toString());
                     if (status.equals("ok")) {
                         JSONObject item = jsonObject.getJSONObject("item");
                         Response.Listener<String> listener2 = response2 -> {
@@ -108,12 +107,12 @@ public class ItemActivity extends AppCompatActivity {
 
                                     if (!is_image_exist) {
                                         ImageView imgView = new ImageView(getApplicationContext());
-                                        Drawable drawable  = getResources().getDrawable(R.drawable.no_image);
+                                        Drawable drawable = getResources().getDrawable(R.drawable.no_image);
                                         imgView.setImageDrawable(drawable);
                                         imageFlipper.addView(imgView);
                                     }
 
-                                    imageFlipper.setFlipInterval( 2000 ); //5s intervals
+                                    imageFlipper.setFlipInterval(2000); //5s intervals
                                     imageFlipper.startFlipping();
 
 
@@ -141,6 +140,9 @@ public class ItemActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(getItemRequest);
 
+        setReviewsInfo(item_id);
+        setAdapter();
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -159,6 +161,53 @@ public class ItemActivity extends AppCompatActivity {
             }
             return false;
         });
+    }
+
+    private void setReviewsInfo(int item_id) {
+        Response.Listener<String> listener1 = response -> {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                try {
+                    String status = jsonObject.getString("status");
+                    System.out.println(jsonObject.toString());
+                    if (status.equals("ok")) {
+                        JSONArray reviews = jsonObject.getJSONArray("reviews");
+                        reviewList = new ArrayList<>();
+
+                        for (int i = 0; i < reviews.length(); i++) {
+                            JSONObject reviewJSON = reviews.getJSONObject(i);
+                            Review review = new Review(reviewJSON.getInt("id"), reviewJSON.getInt("item_id"), reviewJSON.getInt("user_id"), reviewJSON.getString("title"), reviewJSON.getString("description"), reviewJSON.getInt("rating"), reviewJSON.getString("created"));
+                            reviewList.add(review);
+                            adapter = new recyclerAdapterReview(reviewList);
+                            recyclerView.setAdapter(adapter);
+                        }
+                    } else {
+                        String error = jsonObject.getString("error");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ItemActivity.this);
+                        builder.setMessage(error).setNegativeButton("Retry", null).create().show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        };
+
+        ReviewRequest reviewRequest = new ReviewRequest(item_id, listener1, System.out::println);
+
+        RequestQueue reviewRequestQueue = Volley.newRequestQueue(this);
+        reviewRequestQueue.add(reviewRequest);
+    }
+
+    private void setAdapter() {
+        recyclerAdapterReview adapter = new recyclerAdapterReview(reviewList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerViewMargin decoration = new RecyclerViewMargin(10, 1);
+        recyclerView.addItemDecoration(decoration);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
     }
 
     private String saveToInternalStorage(Bitmap bitmapImage) {

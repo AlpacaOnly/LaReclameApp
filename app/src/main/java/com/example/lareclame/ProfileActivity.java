@@ -27,7 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.lareclame.items.CreateItemActivity;
 import com.example.lareclame.items.Item;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
-import com.example.lareclame.recyclerView.recyclerAdapter;
+import com.example.lareclame.recyclerView.recyclerAdapterItem;
 import com.example.lareclame.requests.GetItemsRequest;
 import com.example.lareclame.requests.ImageRequest;
 import com.example.lareclame.requests.UploadImageRequest;
@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private ArrayList<Item> itemsList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private recyclerAdapter adapter;
+    private recyclerAdapterItem adapter;
     private ImageView ProfileImage;
     private static final int PICK_IMAGE = 1;
     Uri ImageUrl;
@@ -204,7 +204,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                                     Item item = new Item(itemJSON.getInt("id"), itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"), bitmaps);
                                     itemsList.add(item);
-                                    adapter = new recyclerAdapter(itemsList);
+                                    adapter = new recyclerAdapterItem(itemsList);
                                     recyclerView.setAdapter(adapter);
                                 } catch (UnsupportedEncodingException | ParseException e) {
                                     e.printStackTrace();
@@ -220,7 +220,6 @@ public class ProfileActivity extends AppCompatActivity {
                         RequestQueue requestQueue = Volley.newRequestQueue(this);
                         requestQueue.add(imageRequest);
                     }
-
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -234,7 +233,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        recyclerAdapter adapter = new recyclerAdapter(itemsList);
+        recyclerAdapterItem adapter = new recyclerAdapterItem(itemsList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         RecyclerViewMargin decoration = new RecyclerViewMargin(10, 1);
         recyclerView.addItemDecoration(decoration);

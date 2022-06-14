@@ -11,22 +11,18 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.lareclame.items.CreateItemActivity;
 import com.example.lareclame.items.Item;
-import com.example.lareclame.items.ItemActivity;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
-import com.example.lareclame.recyclerView.recyclerAdapter;
+import com.example.lareclame.recyclerView.recyclerAdapterItem;
 import com.example.lareclame.requests.GetItemsRequest;
 import com.example.lareclame.requests.ImageRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -45,7 +41,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Item> itemsList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private recyclerAdapter adapter;
+    private recyclerAdapterItem adapter;
     private SearchView searchView;
 
     ArrayAdapter<String> arrayAdapter;
@@ -68,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                System.out.println("asdasd");
                 String search_text = searchView.getQuery().toString().toLowerCase();
                 setItemInfo(search_text, 0);
                 return false;
@@ -102,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        recyclerAdapter adapter = new recyclerAdapter(itemsList);
+        recyclerAdapterItem adapter = new recyclerAdapterItem(itemsList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         RecyclerViewMargin decoration = new RecyclerViewMargin(10, 1);
         recyclerView.addItemDecoration(decoration);
@@ -138,8 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     Item item = new Item(itemJSON.getInt("id"), itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"), bitmaps);
                                     itemsList.add(item);
-                                    System.out.println(itemsList);
-                                    adapter = new recyclerAdapter(itemsList);
+                                    adapter = new recyclerAdapterItem(itemsList);
                                     recyclerView.setAdapter(adapter);
                                 } catch (UnsupportedEncodingException | ParseException e) {
                                     e.printStackTrace();
