@@ -14,6 +14,9 @@ import android.widget.ViewFlipper;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,6 +27,7 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.lareclame.MainActivity;
 import com.example.lareclame.ProfileActivity;
 import com.example.lareclame.R;
+import com.example.lareclame.recyclerView.RecyclerViewMargin;
 import com.example.lareclame.recyclerView.recyclerAdapter;
 import com.example.lareclame.requests.GetItemRequest;
 import com.example.lareclame.requests.GetItemsRequest;
@@ -53,6 +57,8 @@ public class ItemActivity extends AppCompatActivity {
     TextView price_type;
     ImageSlider image_slider;
     ViewFlipper imageFlipper;
+    private RecyclerView recyclerView;
+    private recyclerAdapter adapter;
     String fileName = "/app/res\\drawable\\no_image.png";
 
     @Override
@@ -66,6 +72,7 @@ public class ItemActivity extends AppCompatActivity {
         price_type = findViewById(R.id.tv_price_type);
         image_slider = findViewById(R.id.image_slider);
         imageFlipper = (ViewFlipper) findViewById(R.id.image_flipper);
+        recyclerView = findViewById(R.id.reviewsRecyclerView);
         Intent intent = getIntent();
 
         title.setText(intent.getStringExtra("title"));

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/light_grey">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,16 +17,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ViewFlipper
-                android:id="@+id/image_flipper"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-            </ViewFlipper>
+        <ViewFlipper
+        android:id="@+id/image_flipper"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
+        <TextView
         android:id="@+id/item_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,84 +37,119 @@
         app:layout_constraintStart_toStartOf="@id/item_title"
         app:layout_constraintTop_toBottomOf="@id/image_flipper" />
 
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Отдам в добрые руки котенка"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_date" />
+
+        <TextView
+            android:id="@+id/tv_price_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Бесплатно"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_title" />
+
+
+        <TextView
+            android:id="@+id/item_description"
+            android:layout_width="0dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="8dp"
+            android:text="Отдам котёнка девочка София очень красивая, ласковая, добрая, чистая все кушает! Возраст где то 3 мес. Отдаём потому что переезжаем. Телеграм"
+            app:layout_constraintStart_toStartOf="@id/tv_price_type"
+            app:layout_constraintTop_toBottomOf="@id/tv_price_type" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/item_publisher_photo"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/profile_modified"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_flipper" />
+
+            <TextView
+                android:id="@+id/user_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/name"
+                app:layout_constraintEnd_toStartOf="@+id/item_publisher_photo"
+                app:layout_constraintTop_toBottomOf="@id/image_flipper" />
 
     <TextView
-        android:id="@+id/item_title"
+        android:id="@+id/review"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="Отдам в добрые руки котенка"
-        android:textSize="22dp"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/item_date" />
-
-    <TextView
-        android:id="@+id/tv_price_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="Бесплатно"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/item_title" />
-
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Description:"
-        android:textColor="@color/black"
+        android:text="Review"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/tv_price_type"
-        app:layout_constraintTop_toBottomOf="@id/tv_price_type" />
-
-    <TextView
-        android:id="@+id/item_description"
-        android:layout_width="361dp"
-        android:layout_height="53dp"
+        android:textColor="@color/black"
         android:layout_marginTop="8dp"
-        android:text="Отдам котёнка девочка София очень красивая, ласковая, добрая, чистая все кушает! Возраст где то 3 мес. Отдаём потому что переезжаем. Телеграм"
-        app:layout_constraintStart_toStartOf="@id/description"
-        app:layout_constraintTop_toBottomOf="@id/description" />
+        app:layout_constraintStart_toStartOf="@id/item_description"
+        app:layout_constraintTop_toBottomOf="@id/item_description"/>
 
-    <ImageView
-        android:id="@+id/profile_photo"
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_photo"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="32dp"
+        android:contentDescription="@string/user_image"
+        android:elevation="3dp"
+        android:src="@drawable/profile_photo"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/profile_modified"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/item_description" />
+        app:layout_constraintTop_toBottomOf="@id/review" />
 
     <TextView
         android:id="@+id/author_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="80dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:text="@string/name"
         android:textColor="@color/black"
-        app:layout_constraintStart_toEndOf="@id/profile_photo"
-        app:layout_constraintTop_toBottomOf="@id/item_description" />
+        app:layout_constraintStart_toEndOf="@id/user_photo"
+        app:layout_constraintTop_toBottomOf="@id/review"/>
 
+    <RatingBar
+        android:id="@+id/rating_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/ratingBarStyleSmall"
+        app:layout_constraintStart_toStartOf="@id/author_name"
+        app:layout_constraintTop_toBottomOf="@id/author_name" />
+
+    <EditText
+        android:id="@+id/add_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/edittext_border"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_photo" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/reviewsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/profile_photo"/>
-
+        app:layout_constraintTop_toBottomOf="@id/add_review"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
@@ -120,8 +157,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/container"
-        />
+        android:id="@+id/container"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
