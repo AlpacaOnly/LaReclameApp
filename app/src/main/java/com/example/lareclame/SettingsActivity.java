@@ -116,10 +116,10 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void LogOut(View view) {
-        SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.remove("isUserLogin");
-        editor.commit();
+        editor.clear();
+        editor.apply();
 
         finish();
 
