@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.lareclame.ProfileActivity;
 import com.example.lareclame.R;
 import com.example.lareclame.requests.CategoryRequest;
+import com.example.lareclame.requests.ImageRequest;
 import com.example.lareclame.requests.LoginRequest;
 
 import org.json.JSONArray;
@@ -37,28 +38,6 @@ public class LoginActivity extends AppCompatActivity {
 
         if (isUserLogin) {
             Intent intent = new Intent(this, ProfileActivity.class);
-
-            String user_json = sh.getString("user", "");
-
-            try {
-                JSONObject user = new JSONObject(user_json);
-
-                int user_id = user.getInt("id");
-                int rating = user.getInt("rating");
-                String username = user.getString("username");
-                String bio = user.getString("bio");
-
-                intent.putExtra("user_id", user_id);
-                intent.putExtra("rating", rating);
-                intent.putExtra("username", username);
-                intent.putExtra("bio", bio);
-
-                startActivity(intent);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
             startActivity(intent);
         }
 
@@ -90,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.apply();
 
                     setCategories();
+                    if (!user.getString("picture").equals("")) uploadImage(user.getString("picture"));
 
                     Intent intent = new Intent(this, ProfileActivity.class);
                     startActivity(intent);
@@ -135,6 +115,27 @@ public class LoginActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(categoryRequest);
+    }
+
+    public void uploadImage(String picture) {
+        Response.Listener<String> listener = response -> {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+
+                SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putString("profile-image", jsonObject.getString("image"));
+                editor.apply();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        };
+
+        ImageRequest imageRequest = new ImageRequest("profile-pictures", picture, listener, System.out::println);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(imageRequest);
     }
 
 }
