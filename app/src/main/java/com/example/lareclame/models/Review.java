@@ -1,4 +1,4 @@
-package com.example.lareclame.reviews;
+package com.example.lareclame.models;
 
 public class Review {
     private int id;

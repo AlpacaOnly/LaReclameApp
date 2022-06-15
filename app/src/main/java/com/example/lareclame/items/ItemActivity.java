@@ -1,8 +1,6 @@
 package com.example.lareclame.items;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -10,10 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -35,29 +30,22 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.example.lareclame.MainActivity;
 import com.example.lareclame.ProfileActivity;
 import com.example.lareclame.R;
-import com.example.lareclame.auth.LoginActivity;
-import com.example.lareclame.auth.RegisterActivity;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
-import com.example.lareclame.recyclerView.recyclerAdapterItem;
 import com.example.lareclame.recyclerView.recyclerAdapterReview;
 import com.example.lareclame.requests.AddReviewRequest;
 import com.example.lareclame.requests.GetItemRequest;
 import com.example.lareclame.requests.ImageRequest;
 import com.example.lareclame.requests.ReviewRequest;
-import com.example.lareclame.reviews.Review;
+import com.example.lareclame.models.Review;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
