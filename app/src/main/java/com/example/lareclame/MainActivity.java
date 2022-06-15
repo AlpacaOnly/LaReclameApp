@@ -21,9 +21,11 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.lareclame.items.CreateItemActivity;
 import com.example.lareclame.models.Item;
+import com.example.lareclame.models.User;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
 import com.example.lareclame.recyclerView.recyclerAdapterItem;
 import com.example.lareclame.requests.GetItemsRequest;
+import com.example.lareclame.requests.GetUserInfoRequest;
 import com.example.lareclame.requests.ImageRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -117,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     itemsList = new ArrayList<>();
                     for (int i = 0; i < items.length(); i++) {
                         JSONObject itemJSON = items.getJSONObject(i);
+                        int user_id = itemJSON.getInt("user_id");
 
                         Response.Listener<String> listener2 = response2 -> {
                             try {
@@ -131,11 +134,27 @@ public class MainActivity extends AppCompatActivity {
                                         bitmaps.add(bitmap);
                                     }
 
-                                    Item item = new Item(itemJSON.getInt("id"), itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"), bitmaps);
-                                    itemsList.add(item);
-                                    adapter = new recyclerAdapterItem(itemsList);
-                                    recyclerView.setAdapter(adapter);
-                                } catch (UnsupportedEncodingException | ParseException e) {
+                                    Response.Listener<String> listener3 = response3 -> {
+                                        try {
+                                            JSONObject jsonObject3 = new JSONObject(response3);
+                                            int id = jsonObject3.getInt("id");
+                                            String username = jsonObject3.getString("username");
+
+                                            User user = new User(id, username);
+                                            Item item = new Item(itemJSON.getInt("id"), itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"), bitmaps, user);
+                                            itemsList.add(item);
+                                            adapter = new recyclerAdapterItem(itemsList);
+                                            recyclerView.setAdapter(adapter);
+                                        } catch (JSONException | ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                    };
+
+                                    GetUserInfoRequest getUserInfoRequest = new GetUserInfoRequest(user_id, listener3, System.out::println);
+                                    RequestQueue requestQueue = Volley.newRequestQueue(this);
+                                    requestQueue.add(getUserInfoRequest);
+
+                                } catch (UnsupportedEncodingException e) {
                                     e.printStackTrace();
                                 }
 

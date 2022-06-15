@@ -28,6 +28,7 @@ public class recyclerAdapterItem extends RecyclerView.Adapter<recyclerAdapterIte
         private final TextView tv_name;
         private final TextView tv_date;
         private final TextView tv_price_type;
+        private final TextView tv_seller_username;
         private final ImageView item_photo;
 
 
@@ -36,6 +37,7 @@ public class recyclerAdapterItem extends RecyclerView.Adapter<recyclerAdapterIte
             tv_name = View.findViewById(R.id.item_title);
             tv_date = View.findViewById(R.id.item_date);
             tv_price_type = View.findViewById(R.id.tv_price_type);
+            tv_seller_username = View.findViewById(R.id.seller_username);
             item_photo = View.findViewById(R.id.item_photo);
         }
     }
@@ -52,6 +54,7 @@ public class recyclerAdapterItem extends RecyclerView.Adapter<recyclerAdapterIte
         Item item = itemsList.get(position);
         holder.tv_name.setText(item.getTitle());
         holder.tv_date.setText(item.getDate());
+        holder.tv_seller_username.setText(item.getOwner().getUsername());
 
         ArrayList<Bitmap> bitmaps = item.getPictures();
         if (bitmaps.size() > 0) {

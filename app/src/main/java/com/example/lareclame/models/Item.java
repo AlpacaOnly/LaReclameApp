@@ -30,15 +30,16 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Item {
-    private int id;
-    private String title;
-    private String description;
-    private String date;
-    private String price_type;
-    private int price;
-    private ArrayList<Bitmap> pictures;
+    private final int id;
+    private final String title;
+    private final String description;
+    private final String date;
+    private final String price_type;
+    private final int price;
+    private User owner;
+    private final ArrayList<Bitmap> pictures;
 
-    public Item(int id, String title, String description, String date, String price_type, int price, ArrayList<Bitmap> pictures) throws ParseException {
+    public Item(int id, String title, String description, String date, String price_type, int price, ArrayList<Bitmap> pictures, User owner) throws ParseException {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -47,6 +48,7 @@ public class Item {
         this.price_type = price_capitalized;
         this.price = price;
         this.pictures = pictures;
+        this.owner = owner;
     }
 
     public String formatDate(String dateString) throws ParseException {
@@ -76,23 +78,15 @@ public class Item {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public User getOwner() {
+        return owner;
     }
 }
