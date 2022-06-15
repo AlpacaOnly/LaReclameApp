@@ -8,8 +8,9 @@ public class Review {
     private String description;
     private int rating;
     private String created;
+    private User author;
 
-    public Review(int id, int item_id, int user_id, String title, String description, int rating, String created) {
+    public Review(int id, int item_id, int user_id, String title, String description, int rating, String created, User author) {
         this.id = id;
         this.item_id = item_id;
         this.user_id = user_id;
@@ -17,6 +18,7 @@ public class Review {
         this.description = description;
         this.rating = rating;
         this.created = created;
+        this.author = author;
     }
 
     public int getId() {
@@ -45,5 +47,9 @@ public class Review {
 
     public String getTitle() {
         return title;
+    }
+
+    public User getAuthor() {
+        return author;
     }
 }

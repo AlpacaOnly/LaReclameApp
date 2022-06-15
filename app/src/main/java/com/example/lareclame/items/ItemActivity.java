@@ -30,10 +30,14 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.example.lareclame.MainActivity;
 import com.example.lareclame.ProfileActivity;
 import com.example.lareclame.R;
+import com.example.lareclame.models.Item;
+import com.example.lareclame.models.User;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
+import com.example.lareclame.recyclerView.recyclerAdapterItem;
 import com.example.lareclame.recyclerView.recyclerAdapterReview;
 import com.example.lareclame.requests.AddReviewRequest;
 import com.example.lareclame.requests.GetItemRequest;
+import com.example.lareclame.requests.GetUserInfoRequest;
 import com.example.lareclame.requests.ImageRequest;
 import com.example.lareclame.requests.ReviewRequest;
 import com.example.lareclame.models.Review;
@@ -46,6 +50,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -207,10 +212,27 @@ public class ItemActivity extends AppCompatActivity {
 
                         for (int i = 0; i < reviews.length(); i++) {
                             JSONObject reviewJSON = reviews.getJSONObject(i);
-                            Review review = new Review(reviewJSON.getInt("id"), reviewJSON.getInt("item_id"), reviewJSON.getInt("user_id"), reviewJSON.getString("title"), reviewJSON.getString("description"), reviewJSON.getInt("rating"), reviewJSON.getString("created"));
-                            reviewList.add(review);
-                            adapter = new recyclerAdapterReview(reviewList);
-                            recyclerView.setAdapter(adapter);
+
+                            Response.Listener<String> listener = response1 -> {
+                                try {
+                                    JSONObject jsonObject1 = new JSONObject(response1);
+                                    int id = jsonObject1.getInt("id");
+                                    String username = jsonObject1.getString("username");
+                                    String image = jsonObject1.getString("image");
+
+                                    User user = new User(id, username, image);
+                                    Review review = new Review(reviewJSON.getInt("id"), reviewJSON.getInt("item_id"), reviewJSON.getInt("user_id"), reviewJSON.getString("title"), reviewJSON.getString("description"), reviewJSON.getInt("rating"), reviewJSON.getString("created"), user);
+                                    reviewList.add(review);
+                                    adapter = new recyclerAdapterReview(reviewList);
+                                    recyclerView.setAdapter(adapter);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            };
+
+                            GetUserInfoRequest getUserInfoRequest = new GetUserInfoRequest(reviewJSON.getInt("user_id"), listener, System.out::println);
+                            RequestQueue requestQueue = Volley.newRequestQueue(this);
+                            requestQueue.add(getUserInfoRequest);
                         }
                     } else {
                         String error = jsonObject.getString("error");
