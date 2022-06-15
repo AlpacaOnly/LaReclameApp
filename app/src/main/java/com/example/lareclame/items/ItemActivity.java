@@ -4,13 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -55,8 +59,10 @@ public class ItemActivity extends AppCompatActivity {
     TextView title;
     TextView description;
     TextView price_type;
+    TextView author_name;
     ImageSlider image_slider;
     ViewFlipper imageFlipper;
+    RatingBar ratingBar;
     ArrayList<Review> reviewList = new ArrayList<>();
     private RecyclerView recyclerView;
     private recyclerAdapterReview adapter;
@@ -75,6 +81,8 @@ public class ItemActivity extends AppCompatActivity {
         image_slider = findViewById(R.id.image_slider);
         imageFlipper = (ViewFlipper) findViewById(R.id.image_flipper);
         recyclerView = findViewById(R.id.reviewsRecyclerView);
+        ratingBar = findViewById(R.id.rating_bar);
+        author_name = findViewById(R.id.username);
         Intent intent = getIntent();
 
         title.setText(intent.getStringExtra("title"));
@@ -82,6 +90,17 @@ public class ItemActivity extends AppCompatActivity {
         description.setText(intent.getStringExtra("description"));
         if (intent.getStringExtra("price_type").equals("Fixed")) price_type.setText(intent.getStringExtra("price"));
         else price_type.setText(intent.getStringExtra("price_type"));
+
+        SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
+        String username = "";
+        try {
+            JSONObject user = new JSONObject(sh.getString("user", ""));
+            username = user.getString("username");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        author_name.setText(username);
 
         int item_id = intent.getIntExtra("id", 0);
 
@@ -146,8 +165,6 @@ public class ItemActivity extends AppCompatActivity {
 
         setReviewsInfo(item_id);
         setAdapter();
-
-
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnItemSelectedListener(item -> {
