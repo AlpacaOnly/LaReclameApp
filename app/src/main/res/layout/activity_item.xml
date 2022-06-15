@@ -103,6 +103,18 @@
                 app:layout_constraintStart_toStartOf="@id/tv_cost"
                 app:layout_constraintTop_toBottomOf="@id/tv_price_type" />
 
+            <TextView
+                android:id="@+id/leave_your_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Leave your review"
+                android:textStyle="bold"
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="8dp"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_description"/>
+
             <RatingBar
                 android:id="@+id/rating_bar"
                 style="?android:attr/ratingBarStyleSmall"
@@ -112,30 +124,44 @@
                 android:isIndicator="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="@id/tv_cost"
-                app:layout_constraintTop_toBottomOf="@id/item_description"/>
-
+                app:layout_constraintTop_toBottomOf="@id/leave_your_review"/>
 
             <EditText
-                android:id="@+id/add_review_text"
+                android:id="@+id/review_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/bg_edittext"
-                android:hint="Leave your review"
+                android:hint="Review title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rating_bar" />
+
+            <EditText
+                android:id="@+id/review_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edittext"
+                android:hint="Review description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/review_title" />
 
             <Button
                 android:id="@+id/leave_review"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
+                android:layout_marginTop="8dp"
                 android:text="Submit"
+                android:onClick="leave_review"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_review_text"
+                app:layout_constraintTop_toBottomOf="@id/review_description"
                 />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -175,5 +201,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
+
+    <RelativeLayout
+        android:id="@+id/loadingPanel"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@color/light_grey"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

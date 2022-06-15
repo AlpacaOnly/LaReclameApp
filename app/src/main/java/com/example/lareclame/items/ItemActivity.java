@@ -13,8 +13,11 @@ import android.util.Base64;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -32,9 +35,12 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.example.lareclame.MainActivity;
 import com.example.lareclame.ProfileActivity;
 import com.example.lareclame.R;
+import com.example.lareclame.auth.LoginActivity;
+import com.example.lareclame.auth.RegisterActivity;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
 import com.example.lareclame.recyclerView.recyclerAdapterItem;
 import com.example.lareclame.recyclerView.recyclerAdapterReview;
+import com.example.lareclame.requests.AddReviewRequest;
 import com.example.lareclame.requests.GetItemRequest;
 import com.example.lareclame.requests.ImageRequest;
 import com.example.lareclame.requests.ReviewRequest;
@@ -70,6 +76,12 @@ public class ItemActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private recyclerAdapterReview adapter;
 
+    RelativeLayout loadingPanel;
+
+    EditText review_title;
+    EditText review_description;
+    int item_id;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,17 +98,25 @@ public class ItemActivity extends AppCompatActivity {
         ratingBar = findViewById(R.id.rating_bar);
         author_name = findViewById(R.id.username);
         owner_image = findViewById(R.id.item_publisher_photo);
+        review_title = findViewById(R.id.review_title);
+        review_description = findViewById(R.id.review_description);
+        loadingPanel = findViewById(R.id.loadingPanel);
+
+        loadingPanel.setVisibility(View.GONE);
+
         Intent intent = getIntent();
 
+        item_id = intent.getIntExtra("id", 0);
         title.setText(intent.getStringExtra("title"));
         date.setText(intent.getStringExtra("date"));
         description.setText(intent.getStringExtra("description"));
-        if (intent.getStringExtra("price_type").equals("Fixed")) price_type.setText(intent.getStringExtra("price"));
+        if (intent.getStringExtra("price_type").equals("Fixed"))
+            price_type.setText(intent.getStringExtra("price"));
         else price_type.setText(intent.getStringExtra("price_type"));
         String username = intent.getStringExtra("username");
         String owner_image_base64 = intent.getStringExtra("image");
 
-        if(!owner_image_base64.equalsIgnoreCase("") ){
+        if (!owner_image_base64.equalsIgnoreCase("")) {
             byte[] b = Base64.decode(owner_image_base64, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
             owner_image.setImageBitmap(bitmap);
@@ -223,7 +243,7 @@ public class ItemActivity extends AppCompatActivity {
         reviewRequestQueue.add(reviewRequest);
     }
 
-    private void    setAdapter() {
+    private void setAdapter() {
         recyclerAdapterReview adapter = new recyclerAdapterReview(reviewList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         RecyclerViewMargin decoration = new RecyclerViewMargin(10, 1);
@@ -233,28 +253,51 @@ public class ItemActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private String saveToInternalStorage(Bitmap bitmapImage) {
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
-        String name = new Timestamp(System.currentTimeMillis()).toString();
-        File mypath = new File(directory, name + ".jpg");
+    public void leave_review(View view) {
+        String title = review_title.getText().toString();
+        String description = review_description.getText().toString();
 
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(mypath);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        int rating = (int) ratingBar.getRating();
+
+        if (rating == 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ItemActivity.this);
+            builder.setMessage("Rating can't be zero!");
+            builder.setPositiveButton("Ok", null);
+            builder.create().show();
+            return;
         }
-        return directory.getAbsolutePath();
+
+        if (title.equals("") || description.equals("")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ItemActivity.this);
+            builder.setMessage("Fill all of the fields!");
+            builder.setPositiveButton("Ok", null);
+            builder.create().show();
+            return;
+        }
+
+        loadingPanel.setVisibility(View.VISIBLE);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
+        try {
+            JSONObject user = new JSONObject(sharedPreferences.getString("user", ""));
+            int user_id = user.getInt("id");
+
+            Response.Listener<String> listener = response -> {
+                loadingPanel.setVisibility(View.GONE);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ItemActivity.this);
+                builder.setMessage("Review successfully added");
+                builder.setPositiveButton("Ok", (dialogInterface, i) -> {
+                    finish();
+                    startActivity(getIntent());
+                });
+                builder.create().show();
+            };
+
+            AddReviewRequest addReviewRequest = new AddReviewRequest(item_id, user_id, title, description, rating, listener, System.out::println);
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(addReviewRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
