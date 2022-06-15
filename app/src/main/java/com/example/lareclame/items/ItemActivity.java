@@ -342,12 +342,8 @@ public class ItemActivity extends AppCompatActivity {
             }
         };
 
-
-        System.out.println("asd" + user_id);
-
         GetUserInfoRequest getUserInfoRequest = new GetUserInfoRequest(user_id, listener, System.out::println);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(getUserInfoRequest);
-
     }
 }

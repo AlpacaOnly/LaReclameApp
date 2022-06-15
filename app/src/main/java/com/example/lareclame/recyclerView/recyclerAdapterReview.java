@@ -1,5 +1,6 @@
 package com.example.lareclame.recyclerView;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -12,11 +13,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.example.lareclame.ProfileActivity;
 import com.example.lareclame.R;
 import com.example.lareclame.models.Review;
+import com.example.lareclame.requests.GetUserInfoRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -70,6 +81,41 @@ public class recyclerAdapterReview extends RecyclerView.Adapter<recyclerAdapterR
             Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
             holder.user_photo.setImageBitmap(bitmap);
         }
+
+        holder.tv_name.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(), ProfileActivity.class);
+            intent.putExtra("not_owner", true);
+
+            Response.Listener<String> listener = response -> {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    int user_id = jsonObject.getInt("id");
+                    int rating = jsonObject.getInt("rating");
+                    String username = jsonObject.getString("username");
+                    String telegram = jsonObject.getString("telegram");
+                    String bio = jsonObject.getString("bio");
+                    String picture = URLDecoder.decode(jsonObject.getString("image"), StandardCharsets.UTF_8.name());
+
+                    intent.putExtra("user_id", user_id);
+                    intent.putExtra("rating", rating);
+                    intent.putExtra("username", username);
+                    intent.putExtra("telegram", telegram);
+                    intent.putExtra("bio", bio);
+                    intent.putExtra("picture", picture);
+
+
+
+                    view.getContext().startActivity(intent);
+                } catch (JSONException | UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            };
+
+            GetUserInfoRequest getUserInfoRequest = new GetUserInfoRequest(review.getAuthor().getId(), listener, System.out::println);
+            RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+            requestQueue.add(getUserInfoRequest);
+        });
     }
 
     @Override
