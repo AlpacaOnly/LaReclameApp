@@ -9,8 +9,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
@@ -20,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -38,15 +41,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class CreateItemActivity extends AppCompatActivity{
 
     final int REQUEST_EXTERNAL_STORAGE = 100;
+    List<Bitmap> pictures = new ArrayList<>();
     EditText et_title;
     EditText et_body;
     EditText et_price;
@@ -114,12 +123,24 @@ public class CreateItemActivity extends AppCompatActivity{
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void create_item(View view) {
         final String title = et_title.getText().toString();
         final String body = et_body.getText().toString();
         final String spinner_text = spinner_category.getSelectedItem().toString();
         final String price_type = spinner_price.getSelectedItem().toString().toLowerCase();
-        final int price = Integer.parseInt(et_price.getText().toString());
+        int price = 0;
+
+        if (price_type.equals("fixed")) {
+            try {
+                price = Integer.parseInt(et_price.getText().toString());
+            } catch (NumberFormatException e) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CreateItemActivity.this);
+                builder.setMessage("If you have fixed price type, you must fill the 'price' field as well.");
+                builder.setNegativeButton("Retry", null).create().show();
+                return;
+            }
+        }
 
 
         int category_id = -1;
@@ -157,7 +178,7 @@ public class CreateItemActivity extends AppCompatActivity{
         };
 
 
-        SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
+        SharedPreferences sh = getSharedPreferences("data", MODE_PRIVATE);
         int user_id = -1;
         try {
             JSONObject user = new JSONObject(sh.getString("user", ""));
@@ -166,7 +187,18 @@ public class CreateItemActivity extends AppCompatActivity{
             e.printStackTrace();
         }
 
-        ItemRequest itemRequest = new ItemRequest(user_id, category_id, title, body, price_type, price, listener, System.out::println);
+        ArrayList<String> pictures_base64 = new ArrayList<>();
+        for (int i = 0; i < pictures.size(); i++) {
+            String encodedImage = encodeImage(pictures.get(i));
+            try {
+                URLEncoder.encode(encodedImage, StandardCharsets.UTF_8.toString());
+                pictures_base64.add(encodedImage);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
+        ItemRequest itemRequest = new ItemRequest(user_id, category_id, title, body, price_type, price, new JSONArray(pictures_base64), listener, System.out::println);
 
         RequestQueue itemQueue = Volley.newRequestQueue(this);
         itemQueue.add(itemRequest);
@@ -175,7 +207,6 @@ public class CreateItemActivity extends AppCompatActivity{
     public void choose_image(View view) {
         if (ActivityCompat.checkSelfPermission(CreateItemActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(CreateItemActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STORAGE);
-//                    return;
         } else {
             launchGalleryIntent();
         }
@@ -217,7 +248,7 @@ public class CreateItemActivity extends AppCompatActivity{
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_EXTERNAL_STORAGE  && resultCode == RESULT_OK) {
             final TextView file_count = findViewById(R.id.file_count);
-            final List<Bitmap> bitmaps = new ArrayList<>();
+            pictures = new ArrayList<>();
             ClipData clipData = data.getClipData();
 
             if (clipData != null) {
@@ -229,7 +260,7 @@ public class CreateItemActivity extends AppCompatActivity{
                     try {
                         InputStream inputStream = getContentResolver().openInputStream(imageUri);
                         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                        bitmaps.add(bitmap);
+                        pictures.add(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -242,11 +273,26 @@ public class CreateItemActivity extends AppCompatActivity{
                 try {
                     InputStream inputStream = getContentResolver().openInputStream(imageUri);
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    bitmaps.add(bitmap);
+                    pictures.add(bitmap);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
         }
+    }
+
+    private String encodeImage(Bitmap realImage) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        realImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+
+        return Base64.encodeToString(b, Base64.DEFAULT);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    String wrapWithQuotesAndJoin(List<String> strings) {
+        return strings.stream()
+                .map(s -> "\"" + s + "\"")
+                .collect(Collectors.joining(", "));
     }
 }
