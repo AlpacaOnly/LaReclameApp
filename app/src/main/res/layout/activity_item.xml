@@ -102,27 +102,15 @@
                 app:layout_constraintTop_toBottomOf="@id/item_description" />
 
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/user_photo"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:contentDescription="@string/user_image"
-                android:elevation="3dp"
-                android:src="@drawable/profile_photo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/review" />
-
             <TextView
                 android:id="@+id/author_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/name"
                 android:textColor="@color/black"
-                app:layout_constraintStart_toEndOf="@id/user_photo"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/review" />
 
             <RatingBar
@@ -133,23 +121,44 @@
                 app:layout_constraintStart_toStartOf="@id/author_name"
                 app:layout_constraintTop_toBottomOf="@id/author_name" />
 
+            <LinearLayout
+                android:id="@+id/add_comment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:weightSum="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rating_bar">
+<!--            <EditText-->
+<!--                android:id="@+id/review_title"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:hint="Title"-->
+<!--                android:background="@drawable/edittext_border"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/add_review_text"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/rating_bar" />-->
+
             <EditText
-                android:id="@+id/add_review"
+                android:id="@+id/add_review_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/edittext_border"
+                android:hint="Comment"
+                android:background="@drawable/bg_edittext"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/user_photo" />
-
+                app:layout_constraintTop_toBottomOf="@id/rating_bar" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/reviewsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/add_review" />
+                app:layout_constraintTop_toBottomOf="@id/add_comment" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

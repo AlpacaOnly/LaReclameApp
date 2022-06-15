@@ -1,6 +1,7 @@
 package com.example.lareclame;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,12 +26,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.lareclame.auth.LoginActivity;
 import com.example.lareclame.items.CreateItemActivity;
 import com.example.lareclame.items.Item;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
 import com.example.lareclame.recyclerView.recyclerAdapterItem;
 import com.example.lareclame.requests.GetItemsRequest;
 import com.example.lareclame.requests.ImageRequest;
+import com.example.lareclame.requests.LoginRequest;
+import com.example.lareclame.requests.RatingRequest;
 import com.example.lareclame.requests.UploadImageRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -52,6 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
     private recyclerAdapterItem adapter;
     private ImageView ProfileImage;
     private static final int PICK_IMAGE = 1;
+    TextView tv_rating;
     Uri ImageUrl;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -61,6 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         recyclerView = findViewById(R.id.recyclerView);
+        tv_rating=findViewById(R.id.tv_rating);
         itemsList = new ArrayList<>();
 
         SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
@@ -76,6 +83,7 @@ public class ProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        setRatingInfo(nm);
         setItemInfo("", 0, user_id);
         setAdapter();
 
@@ -241,5 +249,31 @@ public class ProfileActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
     }
+
+    private void setRatingInfo(String username) {
+        Response.Listener <String> listener = response -> {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                String status =jsonObject.getString("status");
+
+                if (status.equals("ok")) {
+                    int rating = jsonObject.getInt("rating");
+                    tv_rating.setText(rating+"");
+
+                } else {
+                    String error = jsonObject.getString("error");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+                    builder.setMessage(error).setNegativeButton("Retry", null).create().show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        };
+        RatingRequest ratingRequest =new RatingRequest(username, listener, System.out::println);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(ratingRequest);
+    }
+
 
 }
