@@ -98,8 +98,11 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
 
+        System.out.println(telegram);
+        if (!telegram.equals("null") && !telegram.equals("")) telegram = "@" + telegram;
+
         tv_username.setText(username);
-        tv_telegram.setText("@" + telegram);
+        tv_telegram.setText(telegram);
         tv_bio.setText(bio);
         tv_rating.setText(Integer.toString(rating));
 
