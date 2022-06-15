@@ -24,6 +24,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
 public class LoginActivity extends AppCompatActivity {
     EditText username;
     EditText password;
@@ -122,13 +126,17 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(response);
 
+                String picture_base64 = URLDecoder.decode(jsonObject.getString("image"), StandardCharsets.UTF_8.name());
+
                 SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                editor.putString("profile-image", jsonObject.getString("image"));
+
+
+                editor.putString("profile-image", picture_base64);
                 editor.apply();
 
-            } catch (JSONException e) {
+            } catch (JSONException | UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         };

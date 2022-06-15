@@ -61,44 +61,51 @@ public class ProfileActivity extends AppCompatActivity {
     Uri ImageUrl;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         recyclerView = findViewById(R.id.recyclerView);
         tv_rating=findViewById(R.id.tv_rating);
-        itemsList = new ArrayList<>();
+        ProfileImage = (ImageView) findViewById(R.id.user_photo);
+        TextView tv_username = (TextView) findViewById(R.id.username);
+        TextView tv_bio = (TextView) findViewById(R.id.tv_bio);
 
-        SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
-        String nm = "";
-        String bio = "";
-        int user_id = 0;
-        try {
-            JSONObject user = new JSONObject(sh.getString("user", ""));
-            user_id = user.getInt("id");
-            nm = user.getString("username");
-            bio = user.getString("bio");
-        } catch (JSONException e) {
-            e.printStackTrace();
+        Intent intent = getIntent();
+
+        boolean not_owner = intent.getBooleanExtra("not_owner", false);
+
+        int user_id = 0, rating = 0;
+        String username = "", bio = "", picture = "";
+
+        if (not_owner) {
+
+        } else {
+            SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
+            try {
+                JSONObject user = new JSONObject(sharedPreferences.getString("user", ""));
+                user_id = user.getInt("id");
+                rating = user.getInt("rating");
+                username = user.getString("username");
+                bio = user.getString("bio");
+                picture = sharedPreferences.getString("profile-image", "");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
-        setRatingInfo(nm);
+
+        tv_username.setText(username);
+        tv_bio.setText(bio);
+        tv_rating.setText(Integer.toString(rating));
+
         setItemInfo("", 0, user_id);
         setAdapter();
 
-        final TextView tv_username = (TextView) findViewById(R.id.username);
-        tv_username.setText(nm);
 
-        final TextView tv_bio = (TextView) findViewById(R.id.tv_bio);
-        tv_bio.setText(bio);
-
-        ProfileImage = (ImageView) findViewById(R.id.user_photo);
-
-        String previouslyEncodedImage = sh.getString("image_data", "");
-
-        if( !previouslyEncodedImage.equalsIgnoreCase("") ){
-            byte[] b = Base64.decode(previouslyEncodedImage, Base64.DEFAULT);
+        if(!picture.equalsIgnoreCase("") ){
+            byte[] b = Base64.decode(picture, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
             ProfileImage.setImageBitmap(bitmap);
         }
@@ -248,31 +255,6 @@ public class ProfileActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-    }
-
-    private void setRatingInfo(String username) {
-        Response.Listener <String> listener = response -> {
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                String status =jsonObject.getString("status");
-
-                if (status.equals("ok")) {
-                    int rating = jsonObject.getInt("rating");
-                    tv_rating.setText(rating+"");
-
-                } else {
-                    String error = jsonObject.getString("error");
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
-                    builder.setMessage(error).setNegativeButton("Retry", null).create().show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        };
-        RatingRequest ratingRequest =new RatingRequest(username, listener, System.out::println);
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(ratingRequest);
     }
 
 
