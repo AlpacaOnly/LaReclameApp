@@ -71,13 +71,14 @@ public class ProfileActivity extends AppCompatActivity {
         ProfileImage = (ImageView) findViewById(R.id.user_photo);
         TextView tv_username = (TextView) findViewById(R.id.username);
         TextView tv_bio = (TextView) findViewById(R.id.tv_bio);
+        TextView tv_telegram = (TextView) findViewById(R.id.telegram);
 
         Intent intent = getIntent();
 
         not_owner = intent.getBooleanExtra("not_owner", false);
 
         int rating = 0;
-        String username = "", bio = "", picture = "";
+        String username = "", telegram = "", bio = "", picture = "";
 
         if (not_owner) {
 
@@ -88,6 +89,7 @@ public class ProfileActivity extends AppCompatActivity {
                 user_id = user.getInt("id");
                 rating = user.getInt("rating");
                 username = user.getString("username");
+                telegram = user.getString("telegram");
                 bio = user.getString("bio");
                 picture = sharedPreferences.getString("profile-image", "");
             } catch (JSONException e) {
@@ -97,6 +99,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         tv_username.setText(username);
+        tv_telegram.setText("@" + telegram);
         tv_bio.setText(bio);
         tv_rating.setText(Integer.toString(rating));
 

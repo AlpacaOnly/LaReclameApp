@@ -72,14 +72,14 @@ public class SettingsActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 String status = jsonObject.getString("status");
-                System.out.println(status);
                 if (status.equals("ok")) {
-                    SharedPreferences sh =  getSharedPreferences("Login", MODE_PRIVATE);
+                    SharedPreferences sh =  getSharedPreferences("data", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sh.edit();
                     try {
                         JSONObject user = new JSONObject(sh.getString("user", ""));
                         if (!username.equals("")) user.put("username", username);
                         if (!bio.equals("")) user.put("bio", bio);
+                        if (!telegram.equals("")) user.put("telegram", telegram);
                         editor.putString("user", user.toString());
                         editor.apply();
                     } catch (JSONException e) {

@@ -79,13 +79,22 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
+                        <TextView
+                            android:id="@+id/telegram"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="\@mercurial5"
+                            app:layout_constraintTop_toBottomOf="@id/username"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/rating_block"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/username">
+                            app:layout_constraintTop_toBottomOf="@id/telegram">
 
                             <TextView
                                 android:id="@+id/rating"
