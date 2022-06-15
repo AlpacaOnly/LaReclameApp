@@ -54,6 +54,8 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ItemActivity extends AppCompatActivity {
     TextView date;
     TextView title;
@@ -63,6 +65,7 @@ public class ItemActivity extends AppCompatActivity {
     ImageSlider image_slider;
     ViewFlipper imageFlipper;
     RatingBar ratingBar;
+    CircleImageView owner_image;
     ArrayList<Review> reviewList = new ArrayList<>();
     private RecyclerView recyclerView;
     private recyclerAdapterReview adapter;
@@ -83,6 +86,7 @@ public class ItemActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.reviewsRecyclerView);
         ratingBar = findViewById(R.id.rating_bar);
         author_name = findViewById(R.id.username);
+        owner_image = findViewById(R.id.item_publisher_photo);
         Intent intent = getIntent();
 
         title.setText(intent.getStringExtra("title"));
@@ -90,14 +94,13 @@ public class ItemActivity extends AppCompatActivity {
         description.setText(intent.getStringExtra("description"));
         if (intent.getStringExtra("price_type").equals("Fixed")) price_type.setText(intent.getStringExtra("price"));
         else price_type.setText(intent.getStringExtra("price_type"));
+        String username = intent.getStringExtra("username");
+        String owner_image_base64 = intent.getStringExtra("image");
 
-        SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
-        String username = "";
-        try {
-            JSONObject user = new JSONObject(sh.getString("user", ""));
-            username = user.getString("username");
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if(!owner_image_base64.equalsIgnoreCase("") ){
+            byte[] b = Base64.decode(owner_image_base64, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+            owner_image.setImageBitmap(bitmap);
         }
 
         author_name.setText(username);

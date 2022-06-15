@@ -210,8 +210,9 @@ public class ProfileActivity extends AppCompatActivity {
                                             JSONObject jsonObject3 = new JSONObject(response3);
                                             int id = jsonObject3.getInt("id");
                                             String username = jsonObject3.getString("username");
+                                            String image = jsonObject3.getString("image");
 
-                                            User user = new User(id, username);
+                                            User user = new User(id, username, image);
                                             Item item = new Item(itemJSON.getInt("id"), itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"), bitmaps, user);
                                             itemsList.add(item);
                                             adapter = new recyclerAdapterItem(itemsList);
