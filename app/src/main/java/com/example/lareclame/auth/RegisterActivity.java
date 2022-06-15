@@ -18,8 +18,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.lareclame.R;
@@ -106,6 +108,9 @@ public class RegisterActivity extends AppCompatActivity {
         };
 
         RegisterRequest registerRequest = new RegisterRequest(username, password, barcode, listener, System.out::println);
+
+        RetryPolicy retryPolicy = new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        registerRequest.setRetryPolicy(retryPolicy);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(registerRequest);
