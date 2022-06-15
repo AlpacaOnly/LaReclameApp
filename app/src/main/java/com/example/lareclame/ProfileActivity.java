@@ -81,7 +81,12 @@ public class ProfileActivity extends AppCompatActivity {
         String username = "", telegram = "", bio = "", picture = "";
 
         if (not_owner) {
-
+            user_id = intent.getIntExtra("user_id", 0);
+            rating = intent.getIntExtra("rating", 0);
+            username = intent.getStringExtra("username");
+            telegram = intent.getStringExtra("telegram");
+            bio = intent.getStringExtra("bio");
+            picture = intent.getStringExtra("picture");
         } else {
             SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
             try {
@@ -97,8 +102,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         }
 
-
-        System.out.println(telegram);
         if (!telegram.equals("null") && !telegram.equals("")) telegram = "@" + telegram;
 
         tv_username.setText(username);
@@ -219,7 +222,7 @@ public class ProfileActivity extends AppCompatActivity {
                                             String image = jsonObject3.getString("image");
 
                                             User user = new User(id, username, image);
-                                            Item item = new Item(itemJSON.getInt("id"), itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"), bitmaps, user);
+                                            Item item = new Item(itemJSON.getInt("id"), user.getId(), itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"), bitmaps, user);
                                             itemsList.add(item);
                                             adapter = new recyclerAdapterItem(itemsList);
                                             recyclerView.setAdapter(adapter);

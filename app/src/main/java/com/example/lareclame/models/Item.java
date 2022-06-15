@@ -31,6 +31,7 @@ import java.util.Date;
 
 public class Item {
     private final int id;
+    private final int user_id;
     private final String title;
     private final String description;
     private final String date;
@@ -39,8 +40,9 @@ public class Item {
     private User owner;
     private final ArrayList<Bitmap> pictures;
 
-    public Item(int id, String title, String description, String date, String price_type, int price, ArrayList<Bitmap> pictures, User owner) throws ParseException {
+    public Item(int id, int user_id, String title, String description, String date, String price_type, int price, ArrayList<Bitmap> pictures, User owner) throws ParseException {
         this.id = id;
+        this.user_id = user_id;
         this.title = title;
         this.description = description;
         this.date = formatDate(date);
@@ -88,5 +90,9 @@ public class Item {
 
     public User getOwner() {
         return owner;
+    }
+
+    public int getUser_id() {
+        return user_id;
     }
 }

@@ -74,6 +74,7 @@ public class ItemActivity extends AppCompatActivity {
     EditText review_title;
     EditText review_description;
     int item_id;
+    int user_id;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -100,6 +101,7 @@ public class ItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         item_id = intent.getIntExtra("id", 0);
+        user_id = intent.getIntExtra("user_id", 0);
         title.setText(intent.getStringExtra("title"));
         date.setText(intent.getStringExtra("date"));
         description.setText(intent.getStringExtra("description"));
@@ -309,5 +311,43 @@ public class ItemActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void open_author_profile(View view) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("not_owner", true);
+
+        Response.Listener<String> listener = response -> {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+
+                int user_id = jsonObject.getInt("id");
+                int rating = jsonObject.getInt("rating");
+                String username = jsonObject.getString("username");
+                String telegram = jsonObject.getString("telegram");
+                String bio = jsonObject.getString("bio");
+                String picture = URLDecoder.decode(jsonObject.getString("image"), StandardCharsets.UTF_8.name());
+
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("rating", rating);
+                intent.putExtra("username", username);
+                intent.putExtra("telegram", telegram);
+                intent.putExtra("bio", bio);
+                intent.putExtra("picture", picture);
+
+
+                startActivity(intent);
+            } catch (JSONException | UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        };
+
+
+        System.out.println("asd" + user_id);
+
+        GetUserInfoRequest getUserInfoRequest = new GetUserInfoRequest(user_id, listener, System.out::println);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(getUserInfoRequest);
+
     }
 }

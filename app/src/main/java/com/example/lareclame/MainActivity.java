@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                                             String image = jsonObject3.getString("image");
 
                                             User user = new User(id, username, image);
-                                            Item item = new Item(itemJSON.getInt("id"), itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"), bitmaps, user);
+                                            Item item = new Item(itemJSON.getInt("id"), user.getId(), itemJSON.getString("title"), itemJSON.getString("description"), itemJSON.getString("created"), itemJSON.getString("price_type"), itemJSON.getInt("price"), bitmaps, user);
                                             itemsList.add(item);
                                             adapter = new recyclerAdapterItem(itemsList);
                                             recyclerView.setAdapter(adapter);

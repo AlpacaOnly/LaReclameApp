@@ -69,6 +69,7 @@ public class recyclerAdapterItem extends RecyclerView.Adapter<recyclerAdapterIte
         holder.tv_name.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), ItemActivity.class);
             intent.putExtra("id", item.getId());
+            intent.putExtra("user_id", item.getOwner().getId());
             intent.putExtra("title", item.getTitle());
             intent.putExtra("date", item.getDate());
             intent.putExtra("description", item.getDescription());
