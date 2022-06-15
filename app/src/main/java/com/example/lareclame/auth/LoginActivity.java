@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,7 @@ import java.nio.charset.StandardCharsets;
 public class LoginActivity extends AppCompatActivity {
     EditText username;
     EditText password;
+    RelativeLayout loadingPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,9 @@ public class LoginActivity extends AppCompatActivity {
 
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
+        loadingPanel = findViewById(R.id.loadingPanel);
+
+        loadingPanel.setVisibility(View.GONE);
     }
 
     public void no_account_onClick(View view) {
@@ -58,7 +63,11 @@ public class LoginActivity extends AppCompatActivity {
         final String Username = username.getText().toString();
         final String Password = password.getText().toString();
 
+        loadingPanel.setVisibility(View.VISIBLE);
+
         Response.Listener<String> listener = response -> {
+            loadingPanel.setVisibility(View.GONE);
+
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 String status = jsonObject.getString("status");
