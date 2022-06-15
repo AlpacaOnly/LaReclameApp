@@ -69,7 +69,6 @@ public class ItemActivity extends AppCompatActivity {
     ArrayList<Review> reviewList = new ArrayList<>();
     private RecyclerView recyclerView;
     private recyclerAdapterReview adapter;
-    String fileName = "/app/res\\drawable\\no_image.png";
 
     @SuppressLint("SetTextI18n")
     @Override
