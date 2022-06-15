@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 public class SettingsActivity extends AppCompatActivity {
     EditText et_username;
+    EditText et_telegram;
     EditText et_password;
     EditText et_bio;
 
@@ -36,6 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         et_username = findViewById(R.id.et_username);
+        et_telegram = findViewById(R.id.et_telegram);
         et_password = findViewById(R.id.et_password);
         et_bio = findViewById(R.id.et_bio);
 
@@ -62,6 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void update_info (View view) {
         final String username = et_username.getText().toString();
+        final String telegram = et_telegram.getText().toString();
         final String password = et_password.getText().toString();
         final String bio = et_bio.getText().toString();
 
@@ -94,7 +97,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         };
 
-        SharedPreferences sh =  getSharedPreferences("Login", MODE_PRIVATE);
+        SharedPreferences sh =  getSharedPreferences("data", MODE_PRIVATE);
         int user_id = 0;
         try {
             JSONObject user = new JSONObject(sh.getString("user", ""));
@@ -103,16 +106,10 @@ public class SettingsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        UpdateUserRequest updateUserRequest = new UpdateUserRequest(user_id, username, password, bio, listener, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println(error);
-            }
-        });
+        UpdateUserRequest updateUserRequest = new UpdateUserRequest(user_id, username, telegram, password, bio, listener, System.out::println);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(updateUserRequest);
-
     }
 
     public void LogOut(View view) {
