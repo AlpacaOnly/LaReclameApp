@@ -32,11 +32,33 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
-        boolean isUserLogin = sh.getBoolean("isUserLogin", false);
+        SharedPreferences sh = getSharedPreferences("data", MODE_PRIVATE);
+        boolean isUserLogin = !(sh.getString("user", "").equals(""));
 
         if (isUserLogin) {
             Intent intent = new Intent(this, ProfileActivity.class);
+
+            String user_json = sh.getString("user", "");
+
+            try {
+                JSONObject user = new JSONObject(user_json);
+
+                int user_id = user.getInt("id");
+                int rating = user.getInt("rating");
+                String username = user.getString("username");
+                String bio = user.getString("bio");
+
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("rating", rating);
+                intent.putExtra("username", username);
+                intent.putExtra("bio", bio);
+
+                startActivity(intent);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
             startActivity(intent);
         }
 
@@ -44,21 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
-        try {
-            JSONObject user = new JSONObject(sh.getString("user", ""));
-            username.setText(user.getString("username"));
-            password.setText(user.getString("password"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void no_account_onClick (View view) {
+    public void no_account_onClick(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
@@ -67,19 +75,18 @@ public class LoginActivity extends AppCompatActivity {
         final String Username = username.getText().toString();
         final String Password = password.getText().toString();
 
-        Response.Listener <String> listener = response -> {
+        Response.Listener<String> listener = response -> {
             try {
                 JSONObject jsonObject = new JSONObject(response);
-                String status =jsonObject.getString("status");
+                String status = jsonObject.getString("status");
 
                 if (status.equals("ok")) {
                     JSONObject user = jsonObject.getJSONObject("user");
 
-                    SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
+                    SharedPreferences preferences = getSharedPreferences("data", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
 
                     editor.putString("user", user.toString());
-                    editor.putBoolean("isUserLogin", true);
                     editor.apply();
 
                     setCategories();
@@ -97,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        LoginRequest loginRequest =new LoginRequest(Username, Password, listener, System.out::println);
+        LoginRequest loginRequest = new LoginRequest(Username, Password, listener, System.out::println);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(loginRequest);
@@ -107,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
         Response.Listener<String> listener = response -> {
             try {
                 JSONObject jsonObject = new JSONObject(response);
-                String status =jsonObject.getString("status");
+                String status = jsonObject.getString("status");
 
                 if (status.equals("ok")) {
                     JSONArray categories = jsonObject.getJSONArray("categories");
@@ -124,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         };
-        CategoryRequest categoryRequest =new CategoryRequest(listener, System.out::println);
+        CategoryRequest categoryRequest = new CategoryRequest(listener, System.out::println);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(categoryRequest);

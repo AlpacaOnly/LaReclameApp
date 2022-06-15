@@ -38,15 +38,15 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:inputType="textEmailAddress"
-        android:id="@+id/sign_up_email_address"
+        android:id="@+id/sign_up_barcode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20sp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
-        android:hint="@string/email_address"
+        android:hint="Barcode"
+        android:inputType="number"
         android:padding="10sp"
         android:textColorHint="@color/grey"
         android:textSize="20sp"
@@ -64,16 +64,16 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
         android:hint="@string/password"
+        android:inputType="textPassword"
         android:padding="10sp"
         android:textColorHint="@color/grey"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sign_up_email_address"
+        app:layout_constraintTop_toBottomOf="@id/sign_up_barcode"
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:inputType="textPassword"
         android:id="@+id/password_re_enter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -81,7 +81,9 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
+        android:autofillHints="password"
         android:hint="@string/re_enter_password"
+        android:inputType="textPassword"
         android:minHeight="48dp"
         android:padding="10sp"
         android:textColorHint="@color/grey"
@@ -89,12 +91,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sign_up_password"
-        tools:ignore="MissingConstraints"
-        android:autofillHints="password"/>
+        tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sign_up_button"
-        android:onClick="onRegisterClick"
         android:layout_width="147dp"
         android:layout_height="48dp"
         android:layout_margin="20dp"
@@ -102,6 +102,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="244dp"
         android:background="@drawable/button_bg"
+        android:onClick="onRegisterClick"
         android:paddingHorizontal="20dp"
         android:text="@string/sign_up"
         android:textColor="@color/white"
@@ -110,5 +111,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/password_re_enter"
         tools:ignore="MissingConstraints" />
+
+    <RelativeLayout
+        android:id="@+id/loadingPanel"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@color/light_grey"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
