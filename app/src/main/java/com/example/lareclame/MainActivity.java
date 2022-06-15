@@ -20,7 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.lareclame.items.CreateItemActivity;
-import com.example.lareclame.items.Item;
+import com.example.lareclame.models.Item;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
 import com.example.lareclame.recyclerView.recyclerAdapterItem;
 import com.example.lareclame.requests.GetItemsRequest;

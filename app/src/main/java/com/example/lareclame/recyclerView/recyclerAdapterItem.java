@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lareclame.items.Item;
+import com.example.lareclame.models.Item;
 import com.example.lareclame.R;
 import com.example.lareclame.items.ItemActivity;
 

@@ -1,7 +1,6 @@
 package com.example.lareclame;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,15 +24,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.lareclame.auth.LoginActivity;
 import com.example.lareclame.items.CreateItemActivity;
-import com.example.lareclame.items.Item;
+import com.example.lareclame.models.Item;
 import com.example.lareclame.recyclerView.RecyclerViewMargin;
 import com.example.lareclame.recyclerView.recyclerAdapterItem;
 import com.example.lareclame.requests.GetItemsRequest;
 import com.example.lareclame.requests.ImageRequest;
-import com.example.lareclame.requests.LoginRequest;
-import com.example.lareclame.requests.RatingRequest;
 import com.example.lareclame.requests.UploadImageRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

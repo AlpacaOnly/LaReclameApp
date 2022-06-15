@@ -1,4 +1,4 @@
-package com.example.lareclame.items;
+package com.example.lareclame.models;
 
 import static android.content.Context.MODE_PRIVATE;
 
