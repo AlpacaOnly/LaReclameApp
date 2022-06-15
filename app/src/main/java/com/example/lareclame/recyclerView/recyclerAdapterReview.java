@@ -3,6 +3,7 @@ package com.example.lareclame.recyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ public class recyclerAdapterReview extends RecyclerView.Adapter<recyclerAdapterR
         private final TextView tv_name;
         private final TextView tv_title;
         private final TextView tv_text;
+        private final RatingBar ratingBar;
 
 
         public MyViewHolder(final View View) {
@@ -31,6 +33,7 @@ public class recyclerAdapterReview extends RecyclerView.Adapter<recyclerAdapterR
             tv_name = View.findViewById(R.id.username);
             tv_title = View.findViewById(R.id.review_title);
             tv_text = View.findViewById(R.id.review_text);
+            ratingBar = View.findViewById(R.id.rating_bar);
         }
     }
 
@@ -47,6 +50,7 @@ public class recyclerAdapterReview extends RecyclerView.Adapter<recyclerAdapterR
         holder.tv_name.setText(review.getTitle());
         holder.tv_title.setText(review.getTitle());
         holder.tv_text.setText(review.getDescription());
+        holder.ratingBar.setRating(review.getRating());
     }
 
     @Override

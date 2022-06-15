@@ -1,5 +1,6 @@
 package com.example.lareclame.items;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -61,6 +62,7 @@ public class ItemActivity extends AppCompatActivity {
     private recyclerAdapterReview adapter;
     String fileName = "/app/res\\drawable\\no_image.png";
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +80,9 @@ public class ItemActivity extends AppCompatActivity {
         title.setText(intent.getStringExtra("title"));
         date.setText(intent.getStringExtra("date"));
         description.setText(intent.getStringExtra("description"));
-        price_type.setText(intent.getStringExtra("price_type"));
+        if (intent.getStringExtra("price_type").equals("Fixed")) price_type.setText(intent.getStringExtra("price"));
+        else price_type.setText(intent.getStringExtra("price_type"));
+
         int item_id = intent.getIntExtra("id", 0);
 
         Response.Listener<String> listener = response -> {
@@ -144,6 +148,7 @@ public class ItemActivity extends AppCompatActivity {
         setAdapter();
 
 
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -169,7 +174,6 @@ public class ItemActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(response);
                 try {
                     String status = jsonObject.getString("status");
-                    System.out.println(jsonObject.toString());
                     if (status.equals("ok")) {
                         JSONArray reviews = jsonObject.getJSONArray("reviews");
                         reviewList = new ArrayList<>();
@@ -200,7 +204,7 @@ public class ItemActivity extends AppCompatActivity {
         reviewRequestQueue.add(reviewRequest);
     }
 
-    private void setAdapter() {
+    private void    setAdapter() {
         recyclerAdapterReview adapter = new recyclerAdapterReview(reviewList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         RecyclerViewMargin decoration = new RecyclerViewMargin(10, 1);

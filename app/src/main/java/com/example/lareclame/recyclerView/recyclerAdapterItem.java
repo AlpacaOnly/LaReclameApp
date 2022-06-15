@@ -70,6 +70,7 @@ public class recyclerAdapterItem extends RecyclerView.Adapter<recyclerAdapterIte
             intent.putExtra("date", item.getDate());
             intent.putExtra("description", item.getDescription());
             intent.putExtra("price_type", item.getPrice_type());
+            intent.putExtra("price", item.getPrice()+"");
 
             view.getContext().startActivity(intent);
         });
