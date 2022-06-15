@@ -60,6 +60,9 @@ public class ProfileActivity extends AppCompatActivity {
     TextView tv_rating;
     Uri ImageUrl;
 
+    boolean not_owner = false;
+    int user_id = 0;
+
     @RequiresApi(api = Build.VERSION_CODES.R)
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @Override
@@ -74,9 +77,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        boolean not_owner = intent.getBooleanExtra("not_owner", false);
+        not_owner = intent.getBooleanExtra("not_owner", false);
 
-        int user_id = 0, rating = 0;
+        int rating = 0;
         String username = "", bio = "", picture = "";
 
         if (not_owner) {
@@ -159,27 +162,14 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void SaveImage(String encodedImage) {
-        SharedPreferences sh = getSharedPreferences("Login", MODE_PRIVATE);
+        SharedPreferences sh = getSharedPreferences("data", MODE_PRIVATE);
         SharedPreferences.Editor edit = sh.edit();
-        edit.putString("image_data", encodedImage);
-        edit.commit();
+        edit.putString("profile-image", encodedImage);
+        edit.apply();
     }
 
     private void SaveToDb(String encodedImage) {
-        SharedPreferences sharedPreferences = getSharedPreferences("Login", MODE_PRIVATE);
-        Response.Listener<String> listener = response -> {
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                String status = jsonObject.getString("status");
-                if (status.equals("error")) {
-                    System.out.println(jsonObject.getString("error"));
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        };
-
-        UploadImageRequest uploadImageRequest = new UploadImageRequest(sharedPreferences.getString("image_data", ""), listener, System.out::println);
+        UploadImageRequest uploadImageRequest = new UploadImageRequest(user_id, encodedImage, null, System.out::println);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(uploadImageRequest);
     }
